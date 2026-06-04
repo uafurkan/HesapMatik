@@ -7,8 +7,9 @@ export async function generateStaticParams() {
   return HESAPLAMA_DATA.map(k => ({ kategori: k.slug }))
 }
 
-export async function generateMetadata({ params }: { params: { kategori: string } }) {
-  const cat = HESAPLAMA_DATA.find(k => k.slug === params.kategori)
+export async function generateMetadata({ params }: { params: Promise<{ kategori: string }> }) {
+  const { kategori } = await params;
+  const cat = HESAPLAMA_DATA.find(k => k.slug === kategori)
   if (!cat) return {}
   return {
     title: `${cat.name} Hesaplamaları | HesapMatik`,
@@ -16,8 +17,9 @@ export async function generateMetadata({ params }: { params: { kategori: string 
   }
 }
 
-export default function CategoryPage({ params }: { params: { kategori: string } }) {
-  const cat = HESAPLAMA_DATA.find(k => k.slug === params.kategori)
+export default async function CategoryPage({ params }: { params: Promise<{ kategori: string }> }) {
+  const { kategori } = await params;
+  const cat = HESAPLAMA_DATA.find(k => k.slug === kategori)
   if (!cat) notFound()
 
   return (

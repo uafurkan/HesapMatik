@@ -6,8 +6,9 @@ export async function generateStaticParams() {
   return getAllSlugs()
 }
 
-export async function generateMetadata({ params }: { params: { kategori: string, hesaplama: string } }) {
-  const data = findHesaplama(params.kategori, params.hesaplama)
+export async function generateMetadata({ params }: { params: Promise<{ kategori: string, hesaplama: string }> }) {
+  const { kategori, hesaplama } = await params;
+  const data = findHesaplama(kategori, hesaplama)
   if (!data) return {}
 
   const title = data.seoTitle || `${data.title} 2024 | Hesaplama Merkezi`
@@ -18,13 +19,14 @@ export async function generateMetadata({ params }: { params: { kategori: string,
     description: desc,
     keywords: [data.title.toLowerCase(), `${data.title.toLowerCase()} hesaplama`, `${data.title.toLowerCase()} 2024`, "hesaplama"],
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/${params.kategori}/${params.hesaplama}`
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/${kategori}/${hesaplama}`
     }
   }
 }
 
-export default function HesaplamaPage({ params }: { params: { kategori: string, hesaplama: string } }) {
-  const data = findHesaplama(params.kategori, params.hesaplama)
+export default async function HesaplamaPage({ params }: { params: Promise<{ kategori: string, hesaplama: string }> }) {
+  const { kategori, hesaplama } = await params;
+  const data = findHesaplama(kategori, hesaplama)
   if (!data) notFound()
 
   // SSS Generation based on title
