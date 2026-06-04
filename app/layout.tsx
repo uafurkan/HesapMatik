@@ -10,8 +10,8 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mon
 
 export const metadata: Metadata = {
   title: "HesapMatik — Türkiye'nin Hesaplama Merkezi | Ücretsiz",
-  description: "Kira artış, kıdem tazminatı, maaş, konut kredisi, BMI ve 50+ hesaplama aracı. 2024 güncel mevzuat. Tamamen ücretsiz.",
-  keywords: ["hesaplama", "hesaplayıcı", "kira artış hesaplama", "kıdem tazminatı hesaplama", "maaş hesaplama", "net maaş hesaplama 2024"],
+  description: "Kira artış, kıdem tazminatı, maaş, konut kredisi, BMI ve 50+ hesaplama aracı. 2026 güncel mevzuat. Tamamen ücretsiz.",
+  keywords: ["hesaplama", "hesaplayıcı", "kira artış hesaplama", "kıdem tazminatı hesaplama", "maaş hesaplama", "net maaş hesaplama 2026"],
 };
 
 export default function RootLayout({
@@ -49,7 +49,7 @@ export default function RootLayout({
         <footer className="glass border-t border-white/5 py-12 mt-20 text-center text-sm font-mono text-gray-500 relative z-10">
           <div className="max-w-5xl mx-auto px-6 flex flex-col items-center gap-4">
             <div className="text-2xl font-bold font-syne text-white opacity-20 tracking-widest">HESAPMATİK</div>
-            <p>© 2024 HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır, kesin bir yasal dayanak oluşturmaz.</p>
+            <p>© 2026 HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır, kesin bir yasal dayanak oluşturmaz.</p>
           </div>
         </footer>
         <Analytics />

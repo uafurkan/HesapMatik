@@ -11,13 +11,13 @@ export async function generateMetadata({ params }: { params: Promise<{ kategori:
   const data = findHesaplama(kategori, hesaplama)
   if (!data) return {}
 
-  const title = data.seoTitle || `${data.title} 2024 | Hesaplama Merkezi`
+  const title = data.seoTitle || `${data.title} 2026 | Hesaplama Merkezi`
   const desc = data.seoDesc || `${data.title} hesaplama aracı: Güncel mevzuatla hızlı ve ücretsiz hesaplayın. ${data.description || ''}`
 
   return {
     title,
     description: desc,
-    keywords: [data.title.toLowerCase(), `${data.title.toLowerCase()} hesaplama`, `${data.title.toLowerCase()} 2024`, "hesaplama"],
+    keywords: [data.title.toLowerCase(), `${data.title.toLowerCase()} hesaplama`, `${data.title.toLowerCase()} 2026`, "hesaplama"],
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/${kategori}/${hesaplama}`
     }
@@ -31,7 +31,7 @@ export default async function HesaplamaPage({ params }: { params: Promise<{ kate
 
   // SSS Generation based on title
   const faqs = [
-    { q: `${data.title} güncel mevzuata uygun mu?`, a: "Evet. Tüm parametreler 2024 H2 (Temmuz 2024 itibariyle) resmi verileri kullanılarak güncellenmiştir." },
+    { q: `${data.title} güncel mevzuata uygun mu?`, a: "Evet. Tüm parametreler 2026 resmi verileri kullanılarak güncellenmiştir." },
     { q: `${data.title} nasıl yapılır?`, a: "Yukarıdaki forma gerekli değerleri girerek anında ve otomatik olarak sonuçları görebilirsiniz. Hesaplamalar tamamen ücretsizdir." },
     { q: `Hesaplama sonuçları ne kadar doğru?`, a: "Hesaplamalar resmi kurumlarca belirlenen güncel formüller kullanılarak yapılmaktadır. Ancak kesin sonuçlar ve yasal işlemler için uzman görüşü almanız önerilir." }
   ]

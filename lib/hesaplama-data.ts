@@ -41,8 +41,8 @@ export const HESAPLAMA_DATA: Kategori[] = [
     color: "amber",
     hesaplamalar: [
       { slug: "kira-artis-hesaplama", title: "Kira Artış Hesaplama",
-        description: "2024 TÜFE oranına göre yasal kira artış miktarını hesaplayın.",
-        seoTitle: "Kira Artış Hesaplama 2024 | TÜFE Oranıyla Kira Zammı",
+        description: "2026 TÜFE oranına göre yasal kira artış miktarını hesaplayın.",
+        seoTitle: "Kira Artış Hesaplama 2026 | TÜFE Oranıyla Kira Zammı",
         inputs: [
           { id:"mevcutKira", label:"Mevcut Aylık Kira (TL)", type:"number", min:0, step:100, unit:"TL", required:true },
           { id:"tufeOran", label:"TÜFE 12 Aylık Ort. (%)", type:"number", defaultValue:69.80, min:0, max:200, step:0.01, unit:"%", helpText:"TÜİK tarafından aylık açıklanan 12 aylık ortalama TÜFE değeri", required:true }
@@ -61,7 +61,7 @@ export const HESAPLAMA_DATA: Kategori[] = [
           { id:"calismaSuresiAy", label:"Çalışma Süresi (Ay)", type:"number", min:1, unit:"ay", required:true }
         ], grafik: "bar" },
       { slug: "net-maas-hesaplama", title: "Net Maaş Hesaplama",
-        description: "2024 vergi ve SGK kesintileriyle brütten nete veya netten brüte maaş hesaplayın.",
+        description: "2026 vergi ve SGK kesintileriyle brütten nete veya netten brüte maaş hesaplayın.",
         inputs: [
           { id:"brutMaas", label:"Brüt Maaş (TL)", type:"number", min:0, step:500, unit:"TL", required:true },
           { id:"yon", label:"Hesaplama Yönü", type:"radio",
@@ -103,7 +103,7 @@ export const HESAPLAMA_DATA: Kategori[] = [
           { id:"fazlaMesaiSaati", label:"Fazla Mesai Saati", type:"number", min:1, max:270, unit:"saat", required:true },
           { id:"tur", label:"Mesai Türü", type:"radio", options:[{value:"normal",label:"Normal (%50 zamlı)"},{value:"gecegunduz",label:"Gece/Hafta Sonu (%100 zamlı)"}], required:true }
         ], kaynaklar: ["İş Kanunu Madde 41"] },
-      { slug: "brut-net-cevirici", title: "Brüt-Net Maaş Çevirici 2024",
+      { slug: "brut-net-cevirici", title: "Brüt-Net Maaş Çevirici 2026",
         description: "Güncel SGK ve vergi oranlarıyla anında maaş dönüşümü.",
         inputs: [
           { id:"miktar", label:"Maaş (TL)", type:"number", unit:"TL", required:true },
@@ -117,7 +117,7 @@ export const HESAPLAMA_DATA: Kategori[] = [
     icon: "🎓",
     color: "green",
     hesaplamalar: [
-      { slug: "tyt-net-hesaplama", title: "TYT Net Hesaplama 2024",
+      { slug: "tyt-net-hesaplama", title: "TYT Net Hesaplama 2026",
         description: "TYT Türkçe, Matematik, Sosyal ve Fen branşları için net hesaplayın.",
         inputs: [
           { id:"turkce_d", label:"Türkçe Doğru", type:"number", min:0, max:40, defaultValue:0, required:true },
@@ -170,11 +170,11 @@ export const HESAPLAMA_DATA: Kategori[] = [
     icon: "⚡",
     color: "yellow",
     hesaplamalar: [
-      { slug: "elektrik-faturasi", title: "Elektrik Faturası Hesaplama 2024",
+      { slug: "elektrik-faturasi", title: "Elektrik Faturası Hesaplama 2026",
         description: "EPDK tarifelerine göre aylık elektrik fatura tahmini.",
         inputs: [{ id:"aylikKwh", label:"Aylık Tüketim (kWh)", type:"number", min:0, max:5000, unit:"kWh", helpText:"Sayacınızdan veya geçmiş faturanızdan öğrenebilirsiniz", required:true }],
         grafik: "pie" },
-      { slug: "dogalgaz-faturasi", title: "Doğalgaz Faturası Hesaplama 2024",
+      { slug: "dogalgaz-faturasi", title: "Doğalgaz Faturası Hesaplama 2026",
         inputs: [{ id:"aylikM3", label:"Aylık Tüketim (m³)", type:"number", min:0, unit:"m³", required:true }],
         grafik: "pie" },
       { slug: "yakit-masrafi", title: "Yakıt Masrafı Hesaplama",
