@@ -11,7 +11,7 @@ export default function Home() {
     { slug: 'konut-kredisi', k: 'finans', name: 'Konut Kredisi' },
     { slug: 'tyt-net-hesaplama', k: 'egitim', name: 'TYT Net' },
     { slug: 'bmi-hesaplama', k: 'saglik', name: 'BMI Hesaplama' },
-    { slug: 'kdv-hesaplama', k: 'matematik', name: 'KDV Hesaplama' },
+    { slug: 'kdv-hesaplama-matematik', k: 'matematik', name: 'KDV Hesaplama' },
     { slug: 'yakit-masrafi', k: 'faturalar', name: 'Yakıt Masrafı' },
   ];
 
@@ -27,13 +27,13 @@ export default function Home() {
           <span className="gradient-text">Hesaplama Merkezi</span>
         </h1>
         <p className="text-gray-700 dark:text-gray-400 font-mono max-w-2xl mx-auto mb-10 text-sm sm:text-base md:text-lg leading-relaxed px-2">
-          Kira artışından net maaş hesabına, YKS netinden kıdem tazminatına kadar 54 farklı aracı ücretsiz kullanın.
+          Kira artışından net maaş hesabına, YKS netinden kıdem tazminatına kadar 175+ farklı aracı ücretsiz kullanın.
         </p>
         
         <SearchBar />
         
         <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-8 text-[10px] sm:text-xs md:text-sm font-mono text-gray-700 dark:text-gray-400 px-2">
-          <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="text-amber-500 text-base sm:text-lg">⚡</span> 54 Araç</div>
+          <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="text-amber-500 text-base sm:text-lg">⚡</span> 175+ Araç</div>
           <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="text-blue-400 text-base sm:text-lg">⚖️</span> %100 Yasal</div>
           <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="text-green-400 text-base sm:text-lg">💸</span> Ücretsiz</div>
         </div>

@@ -35,26 +35,19 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
     const timer = setTimeout(() => {
       try {
         let res = null;
-        if (data.slug === 'kira-artis-hesaplama') res = formulas.hesaplaKiraArtis(Number(inputs.mevcutKira), Number(inputs.tufeOran));
-        else if (data.slug === 'kidem-tazminati') res = formulas.hesaplaKidemTazminati(Number(inputs.brutAylikUcret), Number(inputs.calismaSuresiAy));
-        else if (data.slug === 'ihbar-tazminati') res = formulas.hesaplaIhbarTazminati(Number(inputs.brutAylikUcret), Number(inputs.calismaSuresiAy));
-        else if (data.slug === 'net-maas-hesaplama') {
-          if (inputs.yon === 'bruttenNet') res = formulas.hesaplaNetMaas(Number(inputs.brutMaas));
-          else res = { targetBrut: formulas.hesaplaBrutMaas(Number(inputs.brutMaas)) };
+        const formulaKey = data.formulaKey;
+        if (formulaKey && typeof (formulas as any)[formulaKey] === 'function') {
+          const args: Record<string, any> = {};
+          data.inputs.forEach(input => {
+            const raw = inputs[input.id];
+            if (input.type === 'number' || input.type === 'range') {
+              args[input.id] = raw !== undefined && raw !== '' ? Number(raw) : undefined;
+            } else {
+              args[input.id] = raw;
+            }
+          });
+          res = (formulas as any)[formulaKey](args);
         }
-        else if (data.slug === 'konut-kredisi') res = formulas.hesaplaKonutKredisi(Number(inputs.anapara), Number(inputs.aylikFaizYuzde), Number(inputs.vadeSuresiAy));
-        else if (data.slug === 'tyt-net-hesaplama') res = { tyt: formulas.hesaplaTYTNet([{ad:'Türkçe', dogru:Number(inputs.turkce_d), yanlis:Number(inputs.turkce_y)}, {ad:'Mat', dogru:Number(inputs.mat_d), yanlis:Number(inputs.mat_y)}, {ad:'Sosyal', dogru:Number(inputs.sosyal_d), yanlis:Number(inputs.sosyal_y)}, {ad:'Fen', dogru:Number(inputs.fen_d), yanlis:Number(inputs.fen_y)}]) };
-        else if (data.slug === 'bmi-hesaplama') res = formulas.hesaplaBMI(Number(inputs.agirlik), Number(inputs.boy) / 100);
-        else if (data.slug === 'kalori-ihtiyaci') res = formulas.hesaplaKalori(Number(inputs.agirlik), Number(inputs.boy), Number(inputs.yas), inputs.cinsiyet, Number(inputs.aktivite));
-        else if (data.slug === 'fazla-mesai-ucreti') res = formulas.hesaplaFazlaMesai(Number(inputs.brutAylikUcret), Number(inputs.fazlaMesaiSaati), inputs.tur);
-        else if (data.slug === 'elektrik-faturasi') res = formulas.hesaplaElektrikFaturasi(Number(inputs.aylikKwh));
-        else if (data.slug === 'dogalgaz-faturasi') res = formulas.hesaplaDogalgazFaturasi(Number(inputs.aylikM3));
-        else if (data.slug === 'yakit-masrafi') res = formulas.hesaplaYakitMasrafi(Number(inputs.km), Number(inputs.tuketim), Number(inputs.litreFiyat));
-        else if (data.slug === 'boya-hesaplama') res = formulas.hesaplaBoya(Number(inputs.uzunluk), Number(inputs.genislik), inputs.tavan === 'evet', Number(inputs.kapiSayisi), Number(inputs.pencereSayisi));
-        else if (data.slug === 'fayans-hesaplama') res = formulas.hesaplaFayans(Number(inputs.uzunluk), Number(inputs.genislik), Number(inputs.firingaYuzdesi), Number(inputs.boyutu));
-        else if (data.slug === 'kdv-hesaplama') res = formulas.hesaplaKDV(Number(inputs.tutar), Number(inputs.oran), inputs.dahilMi === 'dahil');
-        else if (data.slug === 'faiz-hesaplama') res = formulas.hesaplaBilesikFaiz(Number(inputs.anapara), Number(inputs.yillikFaiz), Number(inputs.sure), inputs.periyot);
-        
         setResult(res);
       } catch (e) {
         console.error(e);
@@ -64,17 +57,26 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
     }, 150); // slight delay for micro-animation feel
     
     return () => clearTimeout(timer);
-  }, [inputs, data.slug]);
+  }, [inputs, data.formulaKey, data.slug]);
 
   let chartData: any[] = [];
   if (result && data.grafik) {
-    if (data.slug === 'kira-artis-hesaplama') chartData = [{ name: 'Mevcut Kira', value: result.mevcutKira }, { name: 'Artış', value: result.artis }];
-    else if (data.slug === 'kidem-tazminati') chartData = [{ name: 'Net Tazminat', value: result.netTazminat }, { name: 'Damga Vergisi', value: result.damgaVergisi }];
-    else if (data.slug === 'net-maas-hesaplama' && inputs.yon === 'bruttenNet') chartData = [{ name: 'Net Maaş', value: result.netMaas }, { name: 'SGK İşçi', value: result.sgkIssci }, { name: 'İşsizlik', value: result.issizlikIssci }, { name: 'Gelir Vergisi', value: result.gelirVergisi }, { name: 'Damga Vergisi', value: result.damgaVergisi }];
-    else if (data.slug === 'konut-kredisi') chartData = result.amortismanTablosu?.map((r:any) => ({ name: `Ay ${r.ay}`, Anapara: r.anapara, Faiz: r.faiz })) || [];
-    else if (data.slug === 'bmi-hesaplama') chartData = [{ name: 'BMI', value: result.bmi }];
-    else if (data.slug === 'elektrik-faturasi' || data.slug === 'dogalgaz-faturasi') chartData = [{ name: 'Enerji Tutarı', value: result.enerjiTutar }, { name: 'Dağıtım', value: result.dagitimBedeli }, { name: 'KDV', value: result.kdv }];
-    else if (data.slug === 'tyt-net-hesaplama') chartData = result.tyt.map((r:any) => ({ name: r.ad, value: r.net }));
+    if (data.grafikElesmesi && Array.isArray(data.grafikElesmesi)) {
+      chartData = (data.grafikElesmesi as { name: string; key: string }[]).map(item => ({
+        name: item.name,
+        value: result[item.key]
+      }));
+    } else if (data.grafikElesmesi === 'amortisman') {
+      chartData = result.amortismanTablosu?.map((r: any) => ({ name: `Ay ${r.ay}`, Anapara: r.anapara, Faiz: r.faiz })) || [];
+    } else if (data.grafikElesmesi === 'tyt') {
+      chartData = result.tyt?.map((r: any) => ({ name: r.ad, value: r.net })) || [];
+    } else {
+      // Default fallback: extract up to 5 numeric keys
+      chartData = Object.entries(result)
+        .filter(([k, v]) => typeof v === 'number' && k !== 'anapara' && k !== 'mevcutKira' && k !== 'brutMaas')
+        .slice(0, 5)
+        .map(([k, v]) => ({ name: k.replace(/([A-Z])/g, ' $1').trim(), value: v }));
+    }
   }
 
   const categoryColor = Object.keys(CHART_COLORS).find(k => kategori.includes(k) || k.includes(kategori)) || 'finans';
