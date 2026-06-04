@@ -13,93 +13,75 @@ export default function Home() {
     { slug: 'bmi-hesaplama', k: 'saglik', name: 'BMI Hesaplama' },
     { slug: 'kdv-hesaplama', k: 'matematik', name: 'KDV Hesaplama' },
     { slug: 'yakit-masrafi', k: 'faturalar', name: 'Yakıt Masrafı' },
-    { slug: 'elektrik-faturasi', k: 'faturalar', name: 'Elektrik Faturası' },
-    { slug: 'ihbar-tazminati', k: 'finans', name: 'İhbar Tazminatı' },
-    { slug: 'faiz-hesaplama', k: 'finans', name: 'Bileşik Faiz' },
-    { slug: 'fayans-hesaplama', k: 'konut-insaat', name: 'Fayans Hesaplama' },
   ];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-12">
-      {/* HERO */}
-      <div className="text-center mb-16 relative">
-        <div className="inline-block px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-500 text-xs font-mono font-bold tracking-widest uppercase mb-6">
-          v1.0.0
+    <div className="max-w-5xl mx-auto px-6 py-16">
+      {/* HERO SECTION */}
+      <div className="text-center mb-20 relative animate-slide-up">
+        <div className="inline-block px-5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-mono font-bold tracking-widest uppercase mb-8 shadow-[0_0_20px_rgba(255,179,71,0.2)]">
+          <span className="animate-pulse inline-block mr-2 w-2 h-2 rounded-full bg-amber-500"></span> 2024 Güncel Mevzuat
         </div>
-        <h1 className="text-5xl lg:text-7xl font-bold font-syne mb-6 tracking-tight">
-          Türkiye'nin <span className="text-amber-500">Hesaplama Merkezi</span>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black font-syne mb-8 tracking-tighter leading-[1.1]">
+          Türkiye'nin <br/>
+          <span className="gradient-text">Hesaplama Merkezi</span>
         </h1>
-        <p className="text-gray-400 font-mono max-w-2xl mx-auto mb-10">
-          Kira artışından maaş hesabına, yakıt masrafından sınav netine — 54 ücretsiz araç.
+        <p className="text-gray-400 font-mono max-w-2xl mx-auto mb-12 text-base md:text-lg leading-relaxed">
+          Kira artışından net maaş hesabına, YKS netinden kıdem tazminatına kadar 54 farklı aracı ücretsiz kullanın.
         </p>
-        <div className="flex flex-wrap justify-center gap-4 text-sm font-mono text-gray-500">
-          <div className="bg-[#13131f] border border-[#1e1e30] px-4 py-2 rounded-lg"><span className="text-white font-bold">54</span> Hesaplama Aracı</div>
-          <div className="bg-[#13131f] border border-[#1e1e30] px-4 py-2 rounded-lg"><span className="text-white font-bold">7</span> Kategori</div>
-          <div className="bg-[#13131f] border border-[#1e1e30] px-4 py-2 rounded-lg">Tamamen Ücretsiz</div>
-          <div className="bg-[#13131f] border border-[#1e1e30] px-4 py-2 rounded-lg">Güncel Mevzuat</div>
+        
+        <SearchBar />
+        
+        <div className="flex flex-wrap justify-center gap-3 md:gap-6 mt-10 text-xs md:text-sm font-mono text-gray-400">
+          <div className="glass px-5 py-2.5 rounded-xl border border-white/5 flex items-center gap-2 shadow-lg"><span className="text-amber-500 text-lg">⚡</span> 54 Araç</div>
+          <div className="glass px-5 py-2.5 rounded-xl border border-white/5 flex items-center gap-2 shadow-lg"><span className="text-blue-400 text-lg">⚖️</span> %100 Yasal Uyumluluk</div>
+          <div className="glass px-5 py-2.5 rounded-xl border border-white/5 flex items-center gap-2 shadow-lg"><span className="text-green-400 text-lg">💸</span> Tamamen Ücretsiz</div>
         </div>
       </div>
 
-      <SearchBar />
-
-      <div className="mt-16">
-        <h2 className="text-2xl font-bold font-syne mb-2">Kategoriler</h2>
+      <div className="mt-24 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-3xl font-bold font-syne text-white tracking-tight">Tüm Kategoriler</h2>
+        </div>
         <CategoryGrid />
       </div>
 
-      <div className="mt-16">
-        <h2 className="text-2xl font-bold font-syne mb-6">En Çok Kullanılanlar</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {popularTools.map(t => (
-            <Link key={t.slug} href={`/${t.k}/${t.slug}`} className="bg-[#13131f] border border-[#1e1e30] px-4 py-3 rounded-lg text-sm text-center text-gray-300 hover:text-amber-500 hover:border-amber-500/50 transition-colors">
-              {t.name}
+      <div className="mt-32 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+        <h2 className="text-3xl font-bold font-syne mb-8 text-white tracking-tight">En Çok Kullanılanlar</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          {popularTools.map((t, i) => (
+            <Link key={t.slug} href={`/${t.k}/${t.slug}`} className="glass-card rounded-2xl p-6 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(255,179,71,0.15)] hover:border-amber-500/50 transition-all duration-300 group">
+              <div className="text-gray-200 font-bold text-lg group-hover:text-amber-400 transition-colors">{t.name}</div>
+              <div className="text-xs text-gray-500 mt-3 font-mono group-hover:text-amber-500/70 transition-colors flex items-center gap-1">Hemen Hesapla <span className="group-hover:translate-x-1 transition-transform">→</span></div>
             </Link>
           ))}
         </div>
       </div>
 
-      <AdSlot format="leaderboard" slot="1111111111" />
+      <div className="mt-20">
+        <AdSlot format="leaderboard" slot="1111111111" />
+      </div>
 
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-[#0e0e1a] border border-[#1e1e30] p-6 rounded-xl text-center">
-          <div className="text-3xl mb-4">⚖️</div>
-          <h3 className="font-bold text-lg mb-2">Güncel Mevzuat</h3>
-          <p className="text-sm text-gray-500 font-mono">2024 yılına ait resmi rakamlar (asgari ücret, TÜFE, SGK vb.) ile kesin hesaplamalar.</p>
+      <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 animate-slide-up" style={{ animationDelay: '0.3s' }}>
+        <div className="glass-card p-10 rounded-3xl text-center group hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(77,139,255,0.1)] transition-all duration-300">
+          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-inner border border-blue-500/20">⚖️</div>
+          <h3 className="font-bold text-2xl mb-4 text-white font-syne">Güncel Mevzuat</h3>
+          <p className="text-sm text-gray-400 font-mono leading-relaxed">2024 yılına ait resmi rakamlar (asgari ücret, TÜFE, SGK vb.) ile kesin hesaplamalar.</p>
         </div>
-        <div className="bg-[#0e0e1a] border border-[#1e1e30] p-6 rounded-xl text-center">
-          <div className="text-3xl mb-4">⚡</div>
-          <h3 className="font-bold text-lg mb-2">Hızlı & Ücretsiz</h3>
-          <p className="text-sm text-gray-500 font-mono">Üyelik yok, bekleme yok. Hesaplamalarınızı saniyeler içinde ücretsiz yapın.</p>
+        <div className="glass-card p-10 rounded-3xl text-center group hover:border-amber-500/40 hover:shadow-[0_0_30px_rgba(255,179,71,0.1)] transition-all duration-300">
+          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-amber-500/20 to-amber-500/5 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-inner border border-amber-500/20">⚡</div>
+          <h3 className="font-bold text-2xl mb-4 text-white font-syne">Hızlı & Ücretsiz</h3>
+          <p className="text-sm text-gray-400 font-mono leading-relaxed">Üyelik yok, bekleme yok. Hesaplamalarınızı saniyeler içinde tamamen ücretsiz yapın.</p>
         </div>
-        <div className="bg-[#0e0e1a] border border-[#1e1e30] p-6 rounded-xl text-center">
-          <div className="text-3xl mb-4">📊</div>
-          <h3 className="font-bold text-lg mb-2">Grafik & Detaylı Sonuç</h3>
-          <p className="text-sm text-gray-500 font-mono">Sonuçları sadece bir rakam olarak değil, detaylı dökümler ve grafiklerle görün.</p>
+        <div className="glass-card p-10 rounded-3xl text-center group hover:border-green-500/40 hover:shadow-[0_0_30px_rgba(0,232,135,0.1)] transition-all duration-300">
+          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-inner border border-green-500/20">📊</div>
+          <h3 className="font-bold text-2xl mb-4 text-white font-syne">Detaylı Grafik</h3>
+          <p className="text-sm text-gray-400 font-mono leading-relaxed">Sonuçları sadece bir rakam olarak değil, detaylı dökümler ve interaktif grafiklerle görün.</p>
         </div>
       </div>
 
-      <AdSlot format="rectangle" slot="2222222222" />
-
-      <div className="mt-16">
-        <h2 className="text-2xl font-bold font-syne mb-6">Sıkça Sorulan Sorular</h2>
-        <div className="flex flex-col gap-4">
-          <div className="bg-[#13131f] border border-[#1e1e30] rounded-lg p-5">
-            <h3 className="font-semibold text-gray-200 mb-2">Hesaplamalar güncel mevzuata göre mi?</h3>
-            <p className="text-gray-400 text-sm">Evet. Tüm parametreler (asgari ücret, SGK oranları, TÜFE, vergi dilimleri) 2024 H2 için güncellenmiştir.</p>
-          </div>
-          <div className="bg-[#13131f] border border-[#1e1e30] rounded-lg p-5">
-            <h3 className="font-semibold text-gray-200 mb-2">Kira artış hesaplaması nasıl yapılır?</h3>
-            <p className="text-gray-400 text-sm">TBK 344 gereği yasal kira artışı TÜFE 12 aylık ortalamasını aşamaz. Hesaplayıcımız otomatik uygular.</p>
-          </div>
-          <div className="bg-[#13131f] border border-[#1e1e30] rounded-lg p-5">
-            <h3 className="font-semibold text-gray-200 mb-2">Maaş hesaplaması ne kadar doğru?</h3>
-            <p className="text-gray-400 text-sm">SGK ve Gelir Vergisi hesaplamaları resmi 2024 parametreleri kullanır. ±1 TL hata payı olabilir.</p>
-          </div>
-          <div className="bg-[#13131f] border border-[#1e1e30] rounded-lg p-5">
-            <h3 className="font-semibold text-gray-200 mb-2">Döviz kurları güncel mi?</h3>
-            <p className="text-gray-400 text-sm">TCMB resmi günlük kuru otomatik çekilir (saatte bir güncellenir).</p>
-          </div>
-        </div>
+      <div className="mt-20">
+        <AdSlot format="rectangle" slot="2222222222" />
       </div>
     </div>
   )

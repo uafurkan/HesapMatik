@@ -4,31 +4,80 @@
   --font-syne: var(--font-syne), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   
-  --color-bg: #07070d;
-  --color-surface: #0e0e1a;
-  --color-surface2: #13131f;
+  --color-bg: #030305;
+  --color-surface: #0a0a14;
+  --color-surface2: #10101c;
   --color-border: #1e1e30;
-  --color-text: #e2e2f0;
+  --color-text: #f0f0f5;
+  
+  --animate-fade-in: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-up: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+  }
 }
 
 :root {
-  --bg: #07070d;
-  --surface: #0e0e1a;
-  --surface2: #13131f;
+  --bg: #030305;
   --border: #1e1e30;
-  --amber: #ffb347;
-  --blue: #4d8bff;
-  --green: #00e887;
-  --purple: #9b59ff;
-  --red: #ff4d6d;
-  --text: #e2e2f0;
-  --muted: #6b6b8a;
 }
 
 body {
   background-color: var(--bg);
-  color: var(--text);
+  color: #f0f0f5;
   font-family: var(--font-syne);
+  overflow-x: hidden;
+}
+
+.glass {
+  background: rgba(10, 10, 20, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+  background: linear-gradient(145deg, rgba(20,20,30,0.6) 0%, rgba(10,10,20,0.3) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #ffb347, #ff8c00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: 0.75rem;
+  background: var(--bg);
+  background-clip: padding-box;
+  border: 1px solid transparent;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -1;
+  margin: -1px;
+  border-radius: inherit;
+  background: linear-gradient(to bottom right, rgba(255,179,71,0.5), rgba(77,139,255,0.2), rgba(255,255,255,0));
 }
 
 /* Custom Scrollbar for better UX */
@@ -44,5 +93,14 @@ body {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2a2a40;
+  background: #ffb347;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }

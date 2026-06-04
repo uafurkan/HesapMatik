@@ -5,8 +5,8 @@ import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import Link from "next/link";
 
-const syne = Syne({ subsets: ["latin"], variable: "--font-syne" });
-const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
+const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap" });
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
   title: "HesapMatik — Türkiye'nin Hesaplama Merkezi | Ücretsiz",
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr">
+    <html lang="tr" className="dark">
       <head>
         <Script
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID || 'ca-pub-XXXXXXXXXX'}`}
@@ -28,17 +28,29 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`${syne.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col`}>
-        <header className="border-b border-[#1e1e30] py-4 bg-[#07070d]/80 backdrop-blur-md sticky top-0 z-40">
-          <div className="max-w-5xl mx-auto px-4 flex justify-between items-center">
-            <Link href="/" className="text-xl font-bold font-syne tracking-tight">HESAP<span className="text-amber-500">MATİK</span></Link>
+      <body className={`${syne.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col relative bg-[#030305]`}>
+        {/* Ambient Glowing Orbs */}
+        <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none z-[-1] animate-pulse-slow"></div>
+        <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-amber-500/10 blur-[120px] pointer-events-none z-[-1] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+
+        <header className="glass border-b border-white/5 py-4 sticky top-0 z-40 transition-all duration-300">
+          <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
+            <Link href="/" className="text-2xl font-bold font-syne tracking-tight group flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-black text-xl shadow-[0_0_20px_rgba(255,179,71,0.5)] group-hover:scale-105 transition-transform duration-300">H</div>
+              <span className="text-white drop-shadow-sm">HESAP<span className="gradient-text">MATİK</span></span>
+            </Link>
           </div>
         </header>
-        <main className="flex-grow">
+        
+        <main className="flex-grow relative z-10 animate-fade-in">
           {children}
         </main>
-        <footer className="border-t border-[#1e1e30] py-8 mt-12 text-center text-sm font-mono text-gray-500">
-          <p>© 2024 HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır.</p>
+        
+        <footer className="glass border-t border-white/5 py-12 mt-20 text-center text-sm font-mono text-gray-500 relative z-10">
+          <div className="max-w-5xl mx-auto px-6 flex flex-col items-center gap-4">
+            <div className="text-2xl font-bold font-syne text-white opacity-20 tracking-widest">HESAPMATİK</div>
+            <p>© 2024 HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır, kesin bir yasal dayanak oluşturmaz.</p>
+          </div>
         </footer>
         <Analytics />
       </body>
