@@ -1,0 +1,12 @@
+{
+  "env": {
+    "NEXT_PUBLIC_SITE_URL": "https://hesapmatik.vercel.app",
+    "NEXT_PUBLIC_ADSENSE_ID": "ca-pub-XXXXXXXXXX"
+  },
+  "headers": [
+    {
+      "source": "/api/tcmb",
+      "headers": [{ "key": "Cache-Control", "value": "s-maxage=3600, stale-while-revalidate=7200" }]
+    }
+  ]
+}
