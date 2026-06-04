@@ -1,11 +1,22 @@
 "use client";
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Hesaplama } from '@/lib/hesaplama-data';
 import * as formulas from '@/lib/formulas';
 import GrafikWrapper, { CHART_COLORS } from './GrafikWrapper';
 import AdSlot from './AdSlot';
 
-export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesaplama, kategori: string, faqs: {q:string, a:string}[] }) {
+export default function HesaplamaClient({ 
+  data, 
+  kategori, 
+  faqs, 
+  relatedTools = [] 
+}: { 
+  data: Hesaplama, 
+  kategori: string, 
+  faqs: { q: string, a: string }[], 
+  relatedTools?: { slug: string, title: string, description?: string, icon: string }[] 
+}) {
   const [inputs, setInputs] = useState<Record<string, any>>({});
   const [result, setResult] = useState<any>(null);
   const [isCalculating, setIsCalculating] = useState(false);
@@ -236,8 +247,22 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
         </div>
       </div>
 
-      <div className="mt-24 max-w-4xl animate-slide-up" style={{ animationDelay: '0.4s' }}>
-        <h2 className="text-3xl font-black mb-8 font-syne text-gray-900 dark:text-white">Sıkça Sorulan Sorular</h2>
+      {/* SEO Content Article Block */}
+      {data.seoContent && (
+        <div className="mt-16 max-w-4xl animate-slide-up" style={{ animationDelay: '0.3s' }}>
+          <h2 className="text-2xl sm:text-3xl font-black mb-6 font-syne text-gray-900 dark:text-white flex items-center gap-3">
+            <span className="text-amber-500">ℹ</span> Detaylı Bilgi ve Hesaplama Metodolojisi
+          </h2>
+          <div 
+            className="glass-card rounded-2xl p-6 sm:p-8 border border-black/5 dark:border-white/5 text-gray-700 dark:text-gray-300 font-mono text-sm leading-relaxed max-w-none shadow-md overflow-x-auto"
+            dangerouslySetInnerHTML={{ __html: data.seoContent }}
+          />
+        </div>
+      )}
+
+      {/* FAQs Section */}
+      <div className="mt-16 max-w-4xl animate-slide-up" style={{ animationDelay: '0.4s' }}>
+        <h2 className="text-2xl sm:text-3xl font-black mb-8 font-syne text-gray-900 dark:text-white">Sıkça Sorulan Sorular</h2>
         <div className="flex flex-col gap-4">
           {faqs.map((faq, i) => (
             <div key={i} className="glass-card border border-black/5 dark:border-white/5 rounded-2xl p-6 hover:border-black/10 dark:border-white/10 transition-colors">
@@ -249,6 +274,33 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
           ))}
         </div>
       </div>
+
+      {/* Related Tools suggestions */}
+      {relatedTools && relatedTools.length > 0 && (
+        <div className="mt-20 border-t border-black/10 dark:border-white/10 pt-12 animate-slide-up" style={{ animationDelay: '0.5s' }}>
+          <h2 className="text-2xl sm:text-3xl font-black mb-8 font-syne text-gray-900 dark:text-white flex items-center gap-3">
+            <span className="text-amber-500">✨</span> İlginizi Çekebilecek Diğer Hesaplamalar
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            {relatedTools.map((tool) => (
+              <Link 
+                key={tool.slug} 
+                href={`/${kategori}/${tool.slug}`} 
+                className="glass-card rounded-xl p-5 border border-black/5 dark:border-white/5 hover:border-amber-500/30 hover:shadow-lg transition-all group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="text-3xl mb-3 group-hover:scale-110 transition-transform w-fit">{tool.icon}</div>
+                  <h3 className="font-bold text-gray-900 dark:text-white font-syne text-sm group-hover:text-amber-400 transition-colors mb-2">{tool.title}</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-mono line-clamp-2">{tool.description}</p>
+                </div>
+                <div className="text-amber-500 font-bold font-mono text-xs mt-4 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                  Hemen Hesapla →
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

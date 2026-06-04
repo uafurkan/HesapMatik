@@ -23,6 +23,8 @@ export interface Hesaplama {
   grafik?: 'bar' | 'pie' | 'line' | 'gauge'
   grafikElesmesi?: { name: string; key: string }[] | string // Grafik eşleştirme şablonu
   kaynaklar?: string[]             // Yasal dayanak metinleri
+  seoContent?: string              // HTML formatında zengin SEO makalesi
+  customFaqs?: { q: string; a: string }[] // Araca özel Soru-Cevap ikilileri
 }
 
 export interface Kategori {
@@ -43,6 +45,8 @@ export const HESAPLAMA_DATA: Kategori[] = [
     hesaplamalar: [
       { slug: "kira-artis-hesaplama", title: "Kira Artış Hesaplama",
         description: "2026 TÜFE oranına göre yasal kira artış miktarını hesaplayın.",
+        seoTitle: "2026 Yasal Kira Artış Hesaplama (TÜFE Güncel Oranları)",
+        seoDesc: "2026 yılı güncel yasal kira artış oranı hesaplama aracı. TÜİK 12 aylık ortalama TÜFE oranlarına göre kira artışınızı kanuna uygun şekilde hesaplayın.",
         formulaKey: "hesaplaKiraArtis",
         inputs: [
           { id:"mevcutKira", label:"Mevcut Aylık Kira (TL)", type:"number", min:0, step:100, unit:"TL", required:true },
@@ -50,9 +54,34 @@ export const HESAPLAMA_DATA: Kategori[] = [
         ],
         grafik: "bar",
         grafikElesmesi: [{ name: "Mevcut Kira", key: "mevcutKira" }, { name: "Artış", key: "artis" }],
-        kaynaklar: ["TBK Madde 344"] },
+        kaynaklar: ["TBK Madde 344"],
+        customFaqs: [
+          { q: "2026 kira artış oranı neye göre hesaplanır?", a: "2026 yılı itibarıyla konut ve iş yeri kiralarındaki yasal artış oranı, Borçlar Kanunu Madde 344 gereğince TÜİK tarafından açıklanan 12 aylık ortalama TÜFE (Tüketici Fiyat Endeksi) değişim oranına göre belirlenir. Bu oran yasal üst sınırdır; taraflar bu oranın altında bir artışta anlaşabilir ancak üzerinde artış yapamazlar." },
+          { q: "Konut kiralarında %25 sınırı devam ediyor mu?", a: "Hayır. Konut kiralarındaki %25'lik yasal artış sınırı 1 Temmuz 2024 tarihi itibarıyla sona ermiştir. 2025 ve 2026 yıllarında yapılan ve yapılacak olan tüm kira sözleşmesi yenilemelerinde yasal üst sınır olarak yeniden TÜFE 12 aylık ortalaması baz alınmaktadır." },
+          { q: "İşyeri kiralarında kira artış sınırı nedir?", a: "İşyeri (çatılı işyeri) kiralarında da yasal kira artış üst sınırı konutlarda olduğu gibi TÜİK 12 aylık ortalama TÜFE oranıdır. Sözleşmede daha düşük bir oran kararlaştırılmadıysa, yasal olarak bu oranın üzerinde artış talep edilemez." },
+          { q: "Kira artış oranı yasal sınırın üzerinde yapılırsa ne olur?", a: "Borçlar Kanunu gereğince yasal üst sınır olan 12 aylık ortalama TÜFE'nin üzerinde yapılan artış anlaşmaları geçersizdir. Kiracı, yasal sınırın üzerindeki kısmı ödememe hakkına sahiptir. Ödenmişse, geriye dönük olarak sebepsiz zenginleşme hükümlerine göre iadesi talep edilebilir." }
+        ],
+        seoContent: `<div class="space-y-4">
+  <p>2026 yılı güncel mevzuat kurallarına göre konut ve işyeri kira artış oranları, Türk Borçlar Kanunu'nun (TBK) 344. maddesi uyarınca belirlenmektedir. Bu maddeye göre kira sözleşmelerinin yenilenmesinde uygulanacak artış oranı, bir önceki kira yılındaki <strong>Tüketici Fiyat Endeksi'nin (TÜFE) 12 aylık ortalamasını</strong> geçemez.</p>
+  
+  <h4 class="text-base font-bold text-amber-500 mt-4 mb-2 font-syne">Yasal Kira Artışı Formülü</h4>
+  <div class="bg-black/10 dark:bg-white/5 p-4 rounded-xl border border-black/5 dark:border-white/5 font-mono text-xs sm:text-sm my-3 text-gray-900 dark:text-white">
+    Yeni Kira = Mevcut Kira + (Mevcut Kira x Yasal TÜFE Oranı / 100)<br>
+    Artış Miktarı = Mevcut Kira x Yasal TÜFE Oranı / 100
+  </div>
+  
+  <h4 class="text-base font-bold text-amber-500 mt-4 mb-2 font-syne">2026 Yılı Kira Artış Kuralları ve Sınırları</h4>
+  <ul class="list-disc pl-5 space-y-2">
+    <li><strong>%25 Sınırının Durumu:</strong> Konut kiralarında uygulanan %25'lik sabit kira artış tavanı 1 Temmuz 2024'te resmen sona ermiştir. Güncel dönemde yasal tavan yeniden TÜFE 12 aylık ortalaması olmuştur.</li>
+    <li><strong>Yasal Üst Sınır:</strong> Sözleşmede TÜFE oranından daha yüksek bir artış oranı yazsa dahi, kanunen TÜİK'in 12 aylık ortalama TÜFE oranının üzerinde kira artışı yapılamaz. Fazla kısım yasal olarak geçersiz sayılır.</li>
+    <li><strong>İşyeri Kiraları:</strong> İşyerleri için de konutlar gibi 12 aylık ortalama TÜFE sınırı geçerlidir.</li>
+    <li><strong>5 Yıllık Kira Tespit Davası:</strong> Kira sözleşmesinin başlangıcından itibaren 5 yıl geçtikten sonra, yeni kira döneminde uygulanacak kira bedelinin belirlenmesi için taraflar "Kira Tespit Davası" açabilir. Bu davada hakim, TÜFE oranına bağlı kalmaksızın emsal kira bedellerine göre hakkaniyete uygun yeni bir kira belirler.</li>
+  </ul>
+</div>` },
       { slug: "kidem-tazminati", title: "Kıdem Tazminatı Hesaplama",
         description: "Çalışma sürenize ve brüt ücretinize göre kıdem tazminatı hesaplayın.",
+        seoTitle: "2026 Kıdem Tazminatı Hesaplama (Güncel Tavan ve Limitler)",
+        seoDesc: "2026 yılı H2 dönemine ait güncel kıdem tazminatı tavanı (64.948,77 TL) ve yasal kesintilerle brütten nete kıdem tazminatı hesaplama aracı.",
         formulaKey: "hesaplaKidemTazminati",
         inputs: [
           { id:"brutAylikUcret", label:"Brüt Aylık Ücret (TL)", type:"number", min:0, step:500, unit:"TL", required:true },
@@ -60,7 +89,30 @@ export const HESAPLAMA_DATA: Kategori[] = [
         ],
         grafik: "pie",
         grafikElesmesi: [{ name: "Net Tazminat", key: "netTazminat" }, { name: "Damga Vergisi", key: "damgaVergisi" }],
-        kaynaklar: ["İş Kanunu Madde 14"] },
+        kaynaklar: ["İş Kanunu Madde 14"],
+        customFaqs: [
+          { q: "Kıdem tazminatı alma şartları nelerdir?", a: "Kıdem tazminatına hak kazanabilmek için; aynı işverene bağlı işyerinde en az 1 tam yıl çalışmış olmak ve iş sözleşmesinin haklı nedenlerle (sağlık sorunları, mobbing vb.), askerlik, emeklilik, kadının evlenmesi (1 yıl içinde) veya işveren tarafından ahlak dışı haller haricinde feshedilmesi gerekir." },
+          { q: "2026 kıdem tazminatı tavanı ne kadar?", a: "2026 yılı H2 dönemi itibarıyla kıdem tazminatının yıllık yasal tavanı 64.948,77 TL'dir. Brüt maaşınız ne kadar yüksek olursa olsun, her bir çalışma yılı için ödenecek brüt kıdem tazminatı bu tutarı aşamaz." },
+          { q: "Kıdem tazminatından hangi vergiler kesilir?", a: "Kıdem tazminatı, Gelir Vergisi'nden muaftır. Kıdem tazminatı ödemesinden yasal olarak sadece %0.759 (binde 7,59) oranında Damga Vergisi kesintisi yapılır." },
+          { q: "Evlilik nedeniyle istifa eden kadin kidem tazminati alabilir mi?", a: "Evet. Kadın çalışanlar, resmi evlilik tarihinden itibaren 1 yıl içerisinde iş sözleşmesini tek taraflı feshederek kıdem tazminatını talep etme hakkına sahiptir. Bu durumda 1 yıllık kıdem şartının sağlanmış olması gereklidir." }
+        ],
+        seoContent: `<div class="space-y-4">
+  <p>Kıdem tazminatı, 1475 sayılı İş Kanunu'nun yürürlükte kalan 14. maddesine göre düzenlenen, işçinin yıpranma payı ve geleceğe yönelik güvencesidir. En az 1 yıl çalışmış olan işçinin, kanunda belirtilen haklı gerekçelerle işten ayrılması veya işveren tarafından haksız yere işten çıkarılması durumunda her yıl için 30 günlük brüt ücreti tutarında kıdem tazminatı ödenir.</p>
+  
+  <h4 class="text-base font-bold text-amber-500 mt-4 mb-2 font-syne">Kıdem Tazminatı Hesaplama Formülü</h4>
+  <div class="bg-black/10 dark:bg-white/5 p-4 rounded-xl border border-black/5 dark:border-white/5 font-mono text-xs sm:text-sm my-3 text-gray-900 dark:text-white">
+    Brüt Kıdem Tazminatı = (Brüt Aylık Maaş + Düzenli Yan Haklar) x Çalışılan Yıl Sayısı<br>
+    Net Kıdem Tazminatı = Brüt Kıdem Tazminatı - (%0.759 Damga Vergisi Kesintisi)
+  </div>
+  
+  <h4 class="text-base font-bold text-amber-500 mt-4 mb-2 font-syne">2026 Yılı Kıdem Tazminatı Kuralları</h4>
+  <ul class="list-disc pl-5 space-y-2">
+    <li><strong>2026 Kıdem Tazminatı Tavanı:</strong> 2026 yılı H2 dönemi itibarıyla yasal kıdem tavanı <strong>64.948,77 TL</strong>'dir. Maaşınız bu tutardan yüksek olsa bile hesaplamada bu tavan uygulanır.</li>
+    <li><strong>Gelir Vergisi Muafiyeti:</strong> Kıdem tazminatından Gelir Vergisi alınmaz.</li>
+    <li><strong>Damga Vergisi Kesintisi:</strong> Tazminat tutarından sadece binde 7,59 oranında damga vergisi kesilir.</li>
+    <li><strong>Giydirilmiş Ücret Baz Alınır:</strong> Hesaplamada sadece çıplak brüt maaş değil; yol, yemek, yakacak yardımı, ikramiye, prim gibi düzenli ödenen tüm sosyal yardımlar (giydirilmiş ücret) hesaba katılır.</li>
+  </ul>
+</div>` },
       { slug: "ihbar-tazminati", title: "İhbar Tazminatı Hesaplama",
         description: "Çalışma sürenize göre ihbar tazminatı haklarınızı ve kesintileri hesaplayın.",
         formulaKey: "hesaplaIhbarTazminati",
@@ -73,6 +125,8 @@ export const HESAPLAMA_DATA: Kategori[] = [
         kaynaklar: ["İş Kanunu Madde 17"] },
       { slug: "net-maas-hesaplama", title: "Net Maaş Hesaplama",
         description: "2026 vergi ve SGK kesintileriyle brütten nete veya netten brüte maaş hesaplayın.",
+        seoTitle: "2026 Net Maaş Hesaplama (Brütten Nete & Kesintiler)",
+        seoDesc: "2026 yılı güncel vergi dilimleri (%15 - %40) ve SGK işçi kesintileri ile brütten nete veya netten brüte maaş hesaplama aracı.",
         formulaKey: "hesaplaNetMaas",
         inputs: [
           { id:"brutMaas", label:"Maaş Miktarı (TL)", type:"number", min:0, step:500, unit:"TL", required:true },
@@ -81,7 +135,35 @@ export const HESAPLAMA_DATA: Kategori[] = [
             defaultValue:"bruttenNet", required:true }
         ],
         grafik: "pie",
-        grafikElesmesi: [{ name: "Net Maaş", key: "netMaas" }, { name: "SGK İşçi", key: "sgkIssci" }, { name: "İşsizlik", key: "issizlikIssci" }, { name: "Gelir Vergisi", key: "gelirVergisi" }, { name: "Damga Vergisi", key: "damgaVergisi" }] },
+        grafikElesmesi: [{ name: "Net Maaş", key: "netMaas" }, { name: "SGK İşçi", key: "sgkIssci" }, { name: "İşsizlik", key: "issizlikIssci" }, { name: "Gelir Vergisi", key: "gelirVergisi" }, { name: "Damga Vergisi", key: "damgaVergisi" }],
+        customFaqs: [
+          { q: "2026 asgari ücret tutarı ne kadardır?", a: "2026 yılı için belirlenen resmi Net Asgari Ücret 28.075,50 TL, Brüt Asgari Ücret ise 33.030,00 TL'dir. Bu tutarlar tüm Türkiye genelinde asgari sınır olarak uygulanmaktadır." },
+          { q: "Maaştan yapılan yasal kesintiler nelerdir?", a: "Brüt maaştan; %14 oranında SGK İşçi Payı, %1 oranında İşsizlik Sigortası İşçi Payı, gelir miktarına göre kademeli Gelir Vergisi (%15, %20, %27, %35, %40) ve %0.759 oranında Damga Vergisi kesilerek Net Maaş bulunur. Ancak 2026 yılı asgari ücret istisnası gereği, brüt asgari ücrete denk gelen gelir ve damga vergisi kısımları maaşlardan düşülmez (vergi istisnası uygulanır)." },
+          { q: "2026 yılı gelir vergisi dilimleri nasıldır?", a: "2026 yılı kümülatif vergi matrahı dilimleri sırasıyla %15, %20, %27, %35 ve %40 olarak uygulanır. Matrahınız arttıkça kesilen vergi oranı yükselir ve net maaşınız yıl ortasında düşüş gösterebilir." },
+          { q: "Asgari ücret vergi istisnası nedir?", a: "Tüm ücretlilerin aylık brüt asgari ücrete (33.030,00 TL) kadar olan kazançları Gelir Vergisi ve Damga Vergisi'nden muaftır. Bu istisna sayesinde tüm çalışanların net maaşı aylık bazda yasal vergi muafiyeti oranında korunur." }
+        ],
+        seoContent: `<div class="space-y-4">
+  <p>Maaş hesaplaması, işveren tarafından ödenen brüt ücretin, devlet tarafından belirlenen yasal kesintiler düşüldükten sonra çalışanın eline geçen net ücret haline getirilmesi işlemidir. 2026 yılı vergi mevzuatına göre tüm ücretliler için kademeli vergi dilimleri ve asgari ücret vergi istisnası uygulanmaktadır.</p>
+  
+  <h4 class="text-base font-bold text-amber-500 mt-4 mb-2 font-syne">Brütten Nete Maaş Hesaplama Formülü</h4>
+  <div class="bg-black/10 dark:bg-white/5 p-4 rounded-xl border border-black/5 dark:border-white/5 font-mono text-xs sm:text-sm my-3 text-gray-900 dark:text-white">
+    SGK İşçi Payı = Brüt Maaş x %14<br>
+    İşsizlik Sigortası Payı = Brüt Maaş x %1<br>
+    Gelir Vergisi Matrahı = Brüt Maaş - (SGK İşçi + İşsizlik Payı)<br>
+    Brüt Gelir Vergisi = Gelir Vergisi Matrahı x Vergi Dilimi Oranı (%15 - %40)<br>
+    Asgari Ücret Gelir Vergisi İstisnası = Brüt Asgari Ücret Vergi Payı (Maks. İstisna)<br>
+    Ödenecek Gelir Vergisi = Brüt Gelir Vergisi - İstisna Tutarı<br>
+    Net Maaş = Brüt Maaş - SGK İşçi - İşsizlik Payı - Ödenecek Gelir Vergisi - Ödenecek Damga Vergisi
+  </div>
+  
+  <h4 class="text-base font-bold text-amber-500 mt-4 mb-2 font-syne">2026 Maaş Parametreleri ve Kesintiler</h4>
+  <ul class="list-disc pl-5 space-y-2">
+    <li><strong>2026 Brüt Asgari Ücret:</strong> 33.030,00 TL</li>
+    <li><strong>2026 Net Asgari Ücret:</strong> 28.075,50 TL</li>
+    <li><strong>Gelir Vergisi Dilimleri:</strong> Kümülatif matraha göre %15'ten başlayıp %40'a kadar yükselen vergi dilimleri maaşınızın aylar geçtikçe düşmesine neden olabilir.</li>
+    <li><strong>Asgari Ücret İstisnası:</strong> Tüm çalışanların aylık maaşlarında asgari ücret tutarındaki kısımdan gelir ve damga vergisi kesintisi yapılmaz.</li>
+  </ul>
+</div>` },
       { slug: "konut-kredisi", title: "Konut Kredisi Hesaplama",
         description: "Konut kredisi faiz oranlarına ve vadeye göre ödeme planı çıkarın.",
         formulaKey: "hesaplaKonutKredisi",
