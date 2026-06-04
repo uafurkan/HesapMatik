@@ -154,7 +154,7 @@ export default function HesaplamaClient({
                   {input.type === 'radio' && (
                     <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 mt-1 bg-white/50 dark:bg-[#030305]/50 p-2 rounded-xl border border-black/5 dark:border-white/5">
                       {input.options?.map(opt => (
-                        <label key={opt.value} className="flex-1 min-w-[100px] flex items-center justify-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 py-2 px-3 rounded-lg border border-transparent has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/10 has-[:checked]:text-amber-400 transition-all font-mono">
+                        <label key={opt.value} className="flex-1 min-w-[100px] flex items-center justify-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:bg-white/10 py-3 sm:py-2 px-4 sm:px-3 rounded-lg border border-transparent has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/10 has-[:checked]:text-amber-400 transition-all font-mono">
                           <input 
                             type="radio" name={input.id} value={opt.value}
                             checked={inputs[input.id] === opt.value}
@@ -289,16 +289,16 @@ export default function HesaplamaClient({
       {/* Related Tools suggestions */}
       {relatedTools && relatedTools.length > 0 && (
         <div className="mt-20 border-t border-black/10 dark:border-white/10 pt-12 animate-slide-up" style={{ animationDelay: '0.5s' }}>
-          <h2 className="text-2xl sm:text-3xl font-black mb-8 font-syne text-gray-900 dark:text-white flex items-center gap-3">
-            <span className="text-amber-500 inline-flex items-center"><Sparkles size={28} className="drop-shadow-md" /></span> İlginizi Çekebilecek Diğer Hesaplamalar
+          <h2 className="text-xl sm:text-3xl font-black mb-6 sm:mb-8 font-syne text-gray-900 dark:text-white flex items-center gap-2 sm:gap-3">
+            <span className="text-amber-500 inline-flex items-center"><Sparkles size={24} className="drop-shadow-md sm:w-7 sm:h-7" /></span> İlginizi Çekebilecek Diğer Hesaplamalar
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {relatedTools.map((tool) => (
-              <Link key={tool.slug} href={`/${kategori}/${tool.slug}`} className="glass-card rounded-xl p-5 hover:-translate-y-1.5 transition-all duration-300 group hover:border-amber-500/50 hover:shadow-[0_10px_20px_rgba(255,179,71,0.1)] block">
-                <div className="mb-3 group-hover:scale-110 transition-transform w-fit">{CategoryIconMap[tool.icon] || <span className="emoji-premium">{tool.icon}</span>}</div>
-                <h4 className="font-bold text-gray-900 dark:text-white group-hover:text-amber-500 transition-colors font-syne">{tool.title}</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400 font-mono line-clamp-2">{tool.description}</p>
-                <div className="text-amber-500 font-bold font-mono text-xs mt-4 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              <Link key={tool.slug} href={`/${kategori}/${tool.slug}`} className="glass-card rounded-2xl p-4 sm:p-5 hover:-translate-y-1.5 transition-all duration-300 group hover:border-amber-500/50 hover:shadow-[0_10px_20px_rgba(255,179,71,0.1)] flex flex-col items-center text-center sm:block sm:text-left">
+                <div className="mb-2 sm:mb-3 group-hover:scale-110 transition-transform w-fit mx-auto sm:mx-0">{CategoryIconMap[tool.icon] || <span className="emoji-premium">{tool.icon}</span>}</div>
+                <h4 className="font-bold text-sm sm:text-base text-gray-900 dark:text-white group-hover:text-amber-500 transition-colors font-syne leading-tight sm:leading-normal">{tool.title}</h4>
+                <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 font-mono line-clamp-2 mt-1 sm:mt-0">{tool.description}</p>
+                <div className="text-amber-500 font-bold font-mono text-[10px] sm:text-xs mt-3 sm:mt-4 flex items-center justify-center sm:justify-start gap-1 group-hover:translate-x-1 transition-transform">
                   Hemen Hesapla →
                 </div>
               </Link>

@@ -14,7 +14,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="w-9 h-9 rounded-xl glass-card flex items-center justify-center hover:scale-105 transition-transform duration-300 text-lg hover:border-amber-500/50 shadow-sm z-50 text-gray-800 dark:text-white"
+      className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl glass-card flex items-center justify-center hover:scale-105 transition-transform duration-300 hover:border-amber-500/50 shadow-sm z-50 text-gray-800 dark:text-white"
       aria-label="Tema Değiştir"
     >
       <span className="emoji-premium">{theme === "dark" ? "☀️" : "🌙"}</span>

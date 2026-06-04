@@ -36,22 +36,22 @@ export default function RootLayout({
           <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none z-[-1] animate-pulse-slow"></div>
           <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-amber-500/10 blur-[120px] pointer-events-none z-[-1] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
 
-          <header className="glass border-b border-black/5 dark:border-white/5 py-4 sticky top-0 z-40 transition-all duration-300">
-            <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
-              <Link href="/" className="text-2xl font-bold font-syne tracking-tight group flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-black text-xl shadow-[0_0_20px_rgba(255,179,71,0.5)] group-hover:scale-105 transition-transform duration-300">H</div>
+          <header className="glass border-b border-black/5 dark:border-white/5 py-3 sm:py-4 sticky top-0 z-40 transition-all duration-300">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 flex justify-between items-center">
+              <Link href="/" className="text-xl sm:text-2xl font-bold font-syne tracking-tight group flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-black text-lg sm:text-xl shadow-[0_0_20px_rgba(255,179,71,0.5)] group-hover:scale-105 transition-transform duration-300">H</div>
                 <span className="text-gray-900 dark:text-white drop-shadow-sm">HESAP<span className="gradient-text">MATİK</span></span>
               </Link>
               <ThemeToggle />
             </div>
           </header>
         
-        <main className="flex-grow relative z-10 animate-fade-in">
+        <main className="flex-grow relative z-10 animate-fade-in pb-12 sm:pb-0">
           {children}
         </main>
         
-        <footer className="glass border-t border-black/10 dark:border-white/5 py-12 mt-20 text-center text-sm font-mono text-gray-600 dark:text-gray-500 relative z-10">
-          <div className="max-w-5xl mx-auto px-6 flex flex-col items-center gap-4">
+        <footer className="glass border-t border-black/10 dark:border-white/5 py-10 sm:py-12 mt-16 sm:mt-20 text-center text-xs sm:text-sm font-mono text-gray-600 dark:text-gray-500 relative z-10">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center gap-4">
             <div className="text-2xl font-bold font-syne text-gray-900 dark:text-white opacity-20 tracking-widest">HESAPMATİK</div>
             <p>© 2026 HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır, kesin bir yasal dayanak oluşturmaz.</p>
           </div>

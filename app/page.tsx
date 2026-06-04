@@ -23,7 +23,7 @@ export default function Home() {
         <div className="inline-block px-4 py-1.5 rounded-full border border-amber-500/40 bg-amber-500/20 dark:border-amber-500/30 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase mb-6 shadow-[0_0_20px_rgba(255,179,71,0.2)]">
           <span className="animate-pulse inline-block mr-2 w-2 h-2 rounded-full bg-amber-500"></span> 2026 Güncel Mevzuat
         </div>
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-syne mb-6 tracking-tighter leading-[1.1] sm:leading-[1.1]">
+        <h1 className="text-[2.25rem] sm:text-6xl md:text-7xl lg:text-8xl font-black font-syne mb-4 sm:mb-6 tracking-tighter leading-tight sm:leading-[1.1]">
           Türkiye'nin <br className="hidden sm:block"/>
           <span className="gradient-text">Hesaplama Merkezi</span>
         </h1>
@@ -47,20 +47,20 @@ export default function Home() {
         <CategoryGrid />
       </div>
 
-      <div className="mt-20 md:mt-32 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+      <div className="mt-16 md:mt-32 animate-slide-up" style={{ animationDelay: '0.2s' }}>
         <h2 className="text-2xl sm:text-3xl font-bold font-syne mb-6 sm:mb-8 text-gray-900 dark:text-white tracking-tight">En Çok Kullanılanlar</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {popularTools.map((t, i) => (
-            <Link key={t.slug} href={`/${t.k}/${t.slug}`} className="glass-card rounded-2xl p-6 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(255,179,71,0.15)] hover:border-amber-500/50 transition-all duration-300 group">
-              <div className="text-gray-800 dark:text-gray-200 font-bold text-lg group-hover:text-amber-400 transition-colors">{t.name}</div>
-              <div className="text-xs text-gray-600 dark:text-gray-500 mt-3 font-mono group-hover:text-amber-500/70 transition-colors flex items-center gap-1">Hemen Hesapla <span className="group-hover:translate-x-1 transition-transform">→</span></div>
+            <Link key={t.slug} href={`/${t.k}/${t.slug}`} className="glass-card rounded-2xl p-4 sm:p-6 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(255,179,71,0.15)] hover:border-amber-500/50 transition-all duration-300 group flex flex-col justify-center text-center sm:text-left sm:justify-start">
+              <div className="text-gray-800 dark:text-gray-200 font-bold text-sm sm:text-lg group-hover:text-amber-400 transition-colors">{t.name}</div>
+              <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-500 mt-2 sm:mt-3 font-mono group-hover:text-amber-500/70 transition-colors flex items-center justify-center sm:justify-start gap-1">Hemen Hesapla <span className="group-hover:translate-x-1 transition-transform">→</span></div>
             </Link>
           ))}
         </div>
       </div>
 
-      <div className="mt-20">
-        <AdSlot format="leaderboard" slot="1111111111" />
+      <div className="mt-16 sm:mt-20">
+        <AdSlot format="auto" slot="1111111111" />
       </div>
 
       <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 animate-slide-up" style={{ animationDelay: '0.3s' }}>
