@@ -50,7 +50,7 @@ export default function RootLayout({
           {children}
         </main>
         
-        <footer className="glass border-t border-black/5 dark:border-white/5 py-12 mt-20 text-center text-sm font-mono text-gray-500 relative z-10">
+        <footer className="glass border-t border-black/10 dark:border-white/5 py-12 mt-20 text-center text-sm font-mono text-gray-600 dark:text-gray-500 relative z-10">
           <div className="max-w-5xl mx-auto px-6 flex flex-col items-center gap-4">
             <div className="text-2xl font-bold font-syne text-gray-900 dark:text-white opacity-20 tracking-widest">HESAPMATİK</div>
             <p>© 2026 HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır, kesin bir yasal dayanak oluşturmaz.</p>

@@ -23,9 +23,9 @@ export default function SearchBar() {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setTimeout(() => setIsFocused(false), 200)}
           placeholder="Hesaplama aracı ara... (kira, maaş, BMI...)"
-          className="w-full glass-card border-black/10 dark:border-white/10 py-4 sm:py-5 px-5 sm:px-6 pl-12 sm:pl-14 text-gray-900 dark:text-white text-base sm:text-lg focus:outline-none focus:border-amber-500/50 transition-colors relative z-10"
+          className="w-full glass-card border-black/10 dark:border-white/10 py-4 sm:py-5 px-5 sm:px-6 pl-12 sm:pl-14 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-base sm:text-lg focus:outline-none focus:border-amber-500/50 transition-colors relative z-10"
         />
-        <svg className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400 z-20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        <svg className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-400 z-20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
       </div>
       
       {query.length > 1 && isFocused && (
@@ -34,9 +34,9 @@ export default function SearchBar() {
             <ul className="max-h-80 overflow-y-auto">
               {results.map((r, i) => (
                 <li key={i} className="border-b border-black/5 dark:border-white/5 last:border-none">
-                  <Link href={`/${r.kategori}/${r.slug}`} className="block p-4 hover:bg-black/5 dark:hover:bg-white/5 transition-colors group">
-                    <div className="font-bold text-gray-800 dark:text-gray-200 group-hover:text-amber-400 transition-colors">{r.title}</div>
-                    <div className="text-sm text-gray-500 font-mono mt-1 group-hover:text-gray-600 dark:group-hover:text-gray-400">{r.description}</div>
+                  <Link href={`/${r.kategori}/${r.slug}`} className="block p-4 hover:bg-black/10 dark:hover:bg-white/5 transition-colors group">
+                    <div className="font-bold text-gray-800 dark:text-gray-200 group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors">{r.title}</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-500 font-mono mt-1 group-hover:text-gray-800 dark:group-hover:text-gray-400">{r.description}</div>
                   </Link>
                 </li>
               ))}
