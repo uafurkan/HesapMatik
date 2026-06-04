@@ -5,6 +5,17 @@ import { Hesaplama } from '@/lib/hesaplama-data';
 import * as formulas from '@/lib/formulas';
 import GrafikWrapper, { CHART_COLORS } from './GrafikWrapper';
 import AdSlot from './AdSlot';
+import { Sparkles, Coins, Scale, GraduationCap, HeartPulse, Zap, Home, Calculator, Info } from "lucide-react";
+
+const CategoryIconMap: Record<string, React.ReactNode> = {
+  "💰": <Coins size={36} className="text-amber-500 drop-shadow-md" />,
+  "⚖️": <Scale size={36} className="text-blue-500 drop-shadow-md" />,
+  "🎓": <GraduationCap size={36} className="text-emerald-500 drop-shadow-md" />,
+  "🏥": <HeartPulse size={36} className="text-rose-500 drop-shadow-md" />,
+  "⚡": <Zap size={36} className="text-yellow-500 drop-shadow-md" />,
+  "🏠": <Home size={36} className="text-teal-500 drop-shadow-md" />,
+  "📐": <Calculator size={36} className="text-indigo-500 drop-shadow-md" />
+};
 
 export default function HesaplamaClient({ 
   data, 
@@ -177,7 +188,7 @@ export default function HesaplamaClient({
               <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] -mr-20 -mt-20 pointer-events-none"></div>
               
               <h2 className="text-2xl font-black mb-6 font-syne border-b border-black/10 dark:border-white/10 pb-4 text-gray-900 dark:text-white drop-shadow-md flex items-center gap-3">
-                <span className="text-amber-500">❖</span> Hesaplama Sonucu
+                <span className="text-amber-500 inline-flex items-center"><Sparkles size={24} className="drop-shadow-md" /></span> Hesaplama Sonucu
               </h2>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
@@ -233,7 +244,7 @@ export default function HesaplamaClient({
           ) : (
             <div className="h-64 glass-card rounded-3xl flex items-center justify-center border border-black/5 dark:border-white/5 border-dashed shadow-xl">
               <div className="text-center">
-                <div className="text-4xl mb-4 opacity-50">✨</div>
+                <div className="mb-4 opacity-50 flex justify-center"><Sparkles size={48} className="text-amber-400 drop-shadow-md" /></div>
                 <div className="text-gray-600 dark:text-gray-400 font-mono max-w-[200px] mx-auto text-sm leading-relaxed">
                   Hesaplama sonucunu görmek için sol taraftaki formu doldurun.
                 </div>
@@ -251,7 +262,7 @@ export default function HesaplamaClient({
       {data.seoContent && (
         <div className="mt-16 max-w-4xl animate-slide-up" style={{ animationDelay: '0.3s' }}>
           <h2 className="text-2xl sm:text-3xl font-black mb-6 font-syne text-gray-900 dark:text-white flex items-center gap-3">
-            <span className="text-amber-500">ℹ</span> Detaylı Bilgi ve Hesaplama Metodolojisi
+            <span className="text-amber-500 inline-flex items-center"><Info size={28} className="drop-shadow-md" /></span> Detaylı Bilgi ve Hesaplama Metodolojisi
           </h2>
           <div 
             className="glass-card rounded-2xl p-6 sm:p-8 border border-black/5 dark:border-white/5 text-gray-700 dark:text-gray-300 font-mono text-sm leading-relaxed max-w-none shadow-md overflow-x-auto"
@@ -279,13 +290,13 @@ export default function HesaplamaClient({
       {relatedTools && relatedTools.length > 0 && (
         <div className="mt-20 border-t border-black/10 dark:border-white/10 pt-12 animate-slide-up" style={{ animationDelay: '0.5s' }}>
           <h2 className="text-2xl sm:text-3xl font-black mb-8 font-syne text-gray-900 dark:text-white flex items-center gap-3">
-            <span className="text-amber-500">✨</span> İlginizi Çekebilecek Diğer Hesaplamalar
+            <span className="text-amber-500 inline-flex items-center"><Sparkles size={28} className="drop-shadow-md" /></span> İlginizi Çekebilecek Diğer Hesaplamalar
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {relatedTools.map((tool) => (
               <Link key={tool.slug} href={`/${kategori}/${tool.slug}`} className="glass-card rounded-xl p-5 hover:-translate-y-1.5 transition-all duration-300 group hover:border-amber-500/50 hover:shadow-[0_10px_20px_rgba(255,179,71,0.1)] block">
-                <div className="text-3xl mb-3 group-hover:scale-110 transition-transform w-fit"><span className="emoji-premium">{tool.icon}</span></div>
-                <h4 className="font-bold text-gray-900 dark:text-gray-100 group-hover:text-amber-500 transition-colors font-syne">{tool.title}</h4>
+                <div className="mb-3 group-hover:scale-110 transition-transform w-fit">{CategoryIconMap[tool.icon] || <span className="emoji-premium">{tool.icon}</span>}</div>
+                <h4 className="font-bold text-gray-900 dark:text-white group-hover:text-amber-500 transition-colors font-syne">{tool.title}</h4>
                 <p className="text-xs text-gray-500 dark:text-gray-400 font-mono line-clamp-2">{tool.description}</p>
                 <div className="text-amber-500 font-bold font-mono text-xs mt-4 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                   Hemen Hesapla →

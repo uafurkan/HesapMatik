@@ -43,7 +43,7 @@ export default function SearchBar() {
             </ul>
           ) : (
             <div className="p-6 text-center text-gray-500 font-mono">
-              <div className="text-3xl mb-2"><span className="emoji-premium">🔍</span></div>
+              <div className="mb-4 flex justify-center"><SearchIcon size={40} className="text-amber-400 drop-shadow-md opacity-50" /></div>
               Sonuç bulunamadı. Lütfen başka bir kelime deneyin.
             </div>
           )}
