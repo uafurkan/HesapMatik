@@ -3,7 +3,7 @@ import { HESAPLAMA_DATA } from '@/lib/hesaplama-data';
 
 export default function CategoryGrid() {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
       {HESAPLAMA_DATA.map(cat => (
         <Link 
           key={cat.slug} 

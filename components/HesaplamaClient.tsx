@@ -81,16 +81,16 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
   const colors = (CHART_COLORS as any)[categoryColor] || CHART_COLORS.finans;
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
-      <div className="mb-12 animate-fade-in">
-        <h1 className="text-4xl md:text-5xl font-black mb-4 font-syne tracking-tight text-white drop-shadow-md">{data.title}</h1>
-        <p className="text-gray-400 font-mono text-sm md:text-base max-w-2xl">{data.description}</p>
+    <div className="max-w-6xl mx-auto py-6 sm:py-10 px-4 sm:px-6 overflow-hidden">
+      <div className="mb-8 sm:mb-12 animate-fade-in">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3 sm:mb-4 font-syne tracking-tight text-white drop-shadow-md break-words">{data.title}</h1>
+        <p className="text-gray-400 font-mono text-xs sm:text-sm md:text-base max-w-2xl">{data.description}</p>
       </div>
       
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+      <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12">
         {/* INPUTS (40%) */}
         <div className="w-full lg:w-[45%] h-fit animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <div className="glass-card rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden">
+          <div className="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-white/10 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
             
             <div className="flex flex-col gap-6 relative z-10">
@@ -107,7 +107,7 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
                         type="number" min={input.min} max={input.max} step={input.step}
                         value={inputs[input.id] || ''}
                         onChange={e => handleChange(input.id, e.target.value)}
-                        className="w-full bg-[#030305]/80 border border-white/10 rounded-xl p-3.5 text-white font-mono focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10 focus:outline-none transition-all shadow-inner"
+                        className="w-full bg-[#030305]/80 border border-white/10 rounded-xl p-3 sm:p-3.5 text-white font-mono text-base sm:text-sm focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10 focus:outline-none transition-all shadow-inner"
                         placeholder={input.defaultValue?.toString()}
                       />
                       {input.unit && <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-sm font-bold">{input.unit}</span>}
@@ -118,7 +118,7 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
                     <select 
                       value={inputs[input.id] || ''}
                       onChange={e => handleChange(input.id, e.target.value)}
-                      className="w-full bg-[#030305]/80 border border-white/10 rounded-xl p-3.5 text-white focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10 focus:outline-none transition-all shadow-inner font-mono appearance-none"
+                      className="w-full bg-[#030305]/80 border border-white/10 rounded-xl p-3 sm:p-3.5 text-white focus:border-amber-500/50 focus:ring-4 focus:ring-amber-500/10 focus:outline-none transition-all shadow-inner font-mono text-base sm:text-sm appearance-none"
                     >
                       <option value="">Seçiniz...</option>
                       {input.options?.map(opt => (
@@ -128,7 +128,7 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
                   )}
 
                   {input.type === 'radio' && (
-                    <div className="flex flex-wrap gap-4 mt-1 bg-[#030305]/50 p-2 rounded-xl border border-white/5">
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 mt-1 bg-[#030305]/50 p-2 rounded-xl border border-white/5">
                       {input.options?.map(opt => (
                         <label key={opt.value} className="flex-1 min-w-[100px] flex items-center justify-center gap-2 text-sm text-gray-300 cursor-pointer bg-white/5 hover:bg-white/10 py-2 px-3 rounded-lg border border-transparent has-[:checked]:border-amber-500/50 has-[:checked]:bg-amber-500/10 has-[:checked]:text-amber-400 transition-all font-mono">
                           <input 
@@ -167,11 +167,11 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
                 <span className="text-amber-500">❖</span> Hesaplama Sonucu
               </h2>
               
-              <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
                 {Object.entries(result).filter(([k,v]) => typeof v === 'number' || typeof v === 'string').map(([key, value]) => (
-                  <div key={key} className="bg-black/40 p-5 rounded-2xl border border-white/5 shadow-inner hover:border-amber-500/30 transition-colors group">
-                    <div className="text-xs text-gray-500 uppercase tracking-widest mb-2 font-mono group-hover:text-gray-400 transition-colors">{key.replace(/([A-Z])/g, ' $1').trim()}</div>
-                    <div className="text-2xl md:text-3xl font-black text-white font-syne drop-shadow-sm group-hover:text-amber-400 transition-colors">
+                  <div key={key} className="bg-black/40 p-4 sm:p-5 rounded-2xl border border-white/5 shadow-inner hover:border-amber-500/30 transition-colors group">
+                    <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest mb-1.5 sm:mb-2 font-mono group-hover:text-gray-400 transition-colors">{key.replace(/([A-Z])/g, ' $1').trim()}</div>
+                    <div className="text-xl sm:text-2xl md:text-3xl font-black text-white font-syne drop-shadow-sm group-hover:text-amber-400 transition-colors break-words">
                       {typeof value === 'number' ? value.toLocaleString('tr-TR') : value as string}
                     </div>
                   </div>

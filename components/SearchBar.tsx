@@ -23,9 +23,9 @@ export default function SearchBar() {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setTimeout(() => setIsFocused(false), 200)}
           placeholder="Hesaplama aracı ara... (kira, maaş, BMI...)"
-          className="w-full glass-card border-white/10 py-5 px-6 pl-14 text-white text-lg focus:outline-none focus:border-amber-500/50 transition-colors relative z-10"
+          className="w-full glass-card border-white/10 py-4 sm:py-5 px-5 sm:px-6 pl-12 sm:pl-14 text-white text-base sm:text-lg focus:outline-none focus:border-amber-500/50 transition-colors relative z-10"
         />
-        <svg className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400 z-20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        <svg className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-gray-400 z-20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
       </div>
       
       {query.length > 1 && isFocused && (

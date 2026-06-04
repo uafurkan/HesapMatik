@@ -27,9 +27,9 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
   if (type === 'bar') {
     return (
       <ResponsiveContainer width="100%" height={height}>
-        <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-          <XAxis dataKey="name" stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 11}} axisLine={false} tickLine={false} />
-          <YAxis stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 11}} axisLine={false} tickLine={false} />
+        <BarChart data={data} margin={{ top: 20, right: 10, left: -20, bottom: 5 }}>
+          <XAxis dataKey="name" stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickMargin={10} interval="preserveStartEnd" />
+          <YAxis stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
           <Tooltip contentStyle={tooltipStyle} itemStyle={{ color: '#ffb347', fontWeight: 'bold' }} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
           <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '10px' }} />
           <Bar dataKey="value" fill={colors[0]} radius={[8, 8, 0, 0]}>
@@ -45,12 +45,12 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
   if (type === 'pie') {
     return (
       <ResponsiveContainer width="100%" height={height}>
-        <PieChart>
+        <PieChart margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
           <Pie 
             data={data} cx="50%" cy="50%" 
             labelLine={false} 
             label={({ percent = 0 }) => percent > 0.05 ? `${(percent * 100).toFixed(0)}%` : ''} 
-            outerRadius={height / 2 - 30} 
+            outerRadius={height / 2 - 40} 
             innerRadius={height / 4}
             dataKey="value"
             stroke="rgba(0,0,0,0.2)"
@@ -70,9 +70,9 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
   if (type === 'line') {
     return (
       <ResponsiveContainer width="100%" height={height}>
-        <LineChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-          <XAxis dataKey="name" stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 11}} axisLine={false} tickLine={false} />
-          <YAxis stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 11}} axisLine={false} tickLine={false} />
+        <LineChart data={data} margin={{ top: 20, right: 10, left: -20, bottom: 5 }}>
+          <XAxis dataKey="name" stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickMargin={10} interval="preserveStartEnd" />
+          <YAxis stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
           <Tooltip contentStyle={tooltipStyle} />
           <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '10px' }} />
           {Object.keys(data[0]).filter(k => k !== 'name').map((key, i) => (
