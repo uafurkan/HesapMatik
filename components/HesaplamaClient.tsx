@@ -217,7 +217,7 @@ export default function HesaplamaClient({ data, kategori, faqs }: { data: Hesapl
           {faqs.map((faq, i) => (
             <div key={i} className="glass-card border border-white/5 rounded-2xl p-6 hover:border-white/10 transition-colors">
               <h3 className="font-bold text-gray-200 mb-3 text-lg font-syne flex items-start gap-3">
-                <span className="text-amber-500 font-black">Q.</span> {faq.q}
+                <span className="text-amber-500 font-black">S.</span> {faq.q}
               </h3>
               <p className="text-gray-400 text-sm leading-relaxed font-mono pl-8">{faq.a}</p>
             </div>

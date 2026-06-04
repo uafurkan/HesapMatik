@@ -32,7 +32,7 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
           <YAxis stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
           <Tooltip contentStyle={tooltipStyle} itemStyle={{ color: '#ffb347', fontWeight: 'bold' }} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
           <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '10px' }} />
-          <Bar dataKey="value" fill={colors[0]} radius={[8, 8, 0, 0]}>
+          <Bar dataKey="value" name="Değer" fill={colors[0]} radius={[8, 8, 0, 0]}>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
