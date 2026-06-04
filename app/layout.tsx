@@ -4,6 +4,8 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import Link from "next/link";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap" });
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
@@ -20,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className="dark">
+    <html lang="tr" suppressHydrationWarning>
       <head>
         <Script
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID || 'ca-pub-XXXXXXXXXX'}`}
@@ -28,31 +30,34 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`${syne.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col relative bg-[#030305]`}>
-        {/* Ambient Glowing Orbs */}
-        <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none z-[-1] animate-pulse-slow"></div>
-        <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-amber-500/10 blur-[120px] pointer-events-none z-[-1] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+      <body className={`${syne.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col relative bg-[#FDFBF7] dark:bg-[#030305] text-gray-900 dark:text-[#f0f0f5] transition-colors duration-300`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          {/* Ambient Glowing Orbs */}
+          <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none z-[-1] animate-pulse-slow"></div>
+          <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-amber-500/10 blur-[120px] pointer-events-none z-[-1] animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
 
-        <header className="glass border-b border-white/5 py-4 sticky top-0 z-40 transition-all duration-300">
-          <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
-            <Link href="/" className="text-2xl font-bold font-syne tracking-tight group flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-black text-xl shadow-[0_0_20px_rgba(255,179,71,0.5)] group-hover:scale-105 transition-transform duration-300">H</div>
-              <span className="text-white drop-shadow-sm">HESAP<span className="gradient-text">MATİK</span></span>
-            </Link>
-          </div>
-        </header>
+          <header className="glass border-b border-black/5 dark:border-white/5 py-4 sticky top-0 z-40 transition-all duration-300">
+            <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
+              <Link href="/" className="text-2xl font-bold font-syne tracking-tight group flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-black text-xl shadow-[0_0_20px_rgba(255,179,71,0.5)] group-hover:scale-105 transition-transform duration-300">H</div>
+                <span className="text-gray-900 dark:text-white drop-shadow-sm">HESAP<span className="gradient-text">MATİK</span></span>
+              </Link>
+              <ThemeToggle />
+            </div>
+          </header>
         
         <main className="flex-grow relative z-10 animate-fade-in">
           {children}
         </main>
         
-        <footer className="glass border-t border-white/5 py-12 mt-20 text-center text-sm font-mono text-gray-500 relative z-10">
+        <footer className="glass border-t border-black/5 dark:border-white/5 py-12 mt-20 text-center text-sm font-mono text-gray-500 relative z-10">
           <div className="max-w-5xl mx-auto px-6 flex flex-col items-center gap-4">
-            <div className="text-2xl font-bold font-syne text-white opacity-20 tracking-widest">HESAPMATİK</div>
+            <div className="text-2xl font-bold font-syne text-gray-900 dark:text-white opacity-20 tracking-widest">HESAPMATİK</div>
             <p>© 2026 HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır, kesin bir yasal dayanak oluşturmaz.</p>
           </div>
         </footer>
         <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

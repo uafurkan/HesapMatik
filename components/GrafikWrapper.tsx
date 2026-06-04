@@ -15,12 +15,12 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
   if (!data || data.length === 0) return null;
 
   const tooltipStyle = {
-    backgroundColor: 'rgba(10, 10, 20, 0.9)',
+    backgroundColor: 'var(--glass-bg)',
     backdropFilter: 'blur(10px)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
+    border: '1px solid var(--glass-border)',
     borderRadius: '12px',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
-    color: '#fff',
+    boxShadow: '0 10px 30px var(--glass-card-shadow)',
+    color: 'inherit',
     fontFamily: 'var(--font-mono)'
   };
 
@@ -93,14 +93,14 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
     return (
       <div className="flex flex-col items-center justify-center relative" style={{ height }}>
         <div className="relative w-64 h-32 overflow-hidden drop-shadow-[0_10px_20px_rgba(255,179,71,0.2)]">
-          <div className="absolute top-0 left-0 w-64 h-64 rounded-full border-[30px] border-[#1e1e30]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%)' }}></div>
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full border-[30px] border-black/5 dark:border-[#1e1e30]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%)' }}></div>
           <div className="absolute top-0 left-0 w-64 h-64 rounded-full border-[30px] border-transparent transition-all duration-1000 ease-out" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%)', borderTopColor: colors[0], borderRightColor: colors[0], transform: 'rotate(-45deg)' }}></div>
-          <div className="absolute bottom-0 left-1/2 w-1 h-32 bg-white origin-bottom transition-transform duration-1000 ease-out shadow-[0_0_10px_rgba(255,255,255,0.8)]" style={{ transform: `translateX(-50%) rotate(${angle}deg)` }}>
-            <div className="w-4 h-4 bg-white rounded-full absolute -top-2 -left-1.5 shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+          <div className="absolute bottom-0 left-1/2 w-1 h-32 bg-gray-800 dark:bg-white origin-bottom transition-transform duration-1000 ease-out shadow-[0_0_10px_rgba(0,0,0,0.2)] dark:shadow-[0_0_10px_rgba(255,255,255,0.8)]" style={{ transform: `translateX(-50%) rotate(${angle}deg)` }}>
+            <div className="w-4 h-4 bg-gray-800 dark:bg-white rounded-full absolute -top-2 -left-1.5 shadow-[0_0_10px_rgba(0,0,0,0.2)] dark:shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
           </div>
         </div>
-        <div className="text-4xl font-black mt-6 font-syne text-white drop-shadow-md">{value.toFixed(1)}</div>
-        <div className="text-gray-400 text-xs tracking-widest uppercase mt-2 font-mono">BMI Değeri</div>
+        <div className="text-4xl font-black mt-6 font-syne text-gray-900 dark:text-white drop-shadow-md">{value.toFixed(1)}</div>
+        <div className="text-gray-600 dark:text-gray-400 text-xs tracking-widest uppercase mt-2 font-mono">BMI Değeri</div>
       </div>
     );
   }
