@@ -69,7 +69,7 @@ export default async function HesaplamaPage({ params }: { params: Promise<{ kate
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <HesaplamaClient data={data} kategori={params.kategori} faqs={faqs} />
+      <HesaplamaClient data={data} kategori={kategori} faqs={faqs} />
     </>
   )
 }
