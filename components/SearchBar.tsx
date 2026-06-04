@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { HESAPLAMA_DATA } from '@/lib/hesaplama-data';
+import { SearchIcon } from 'lucide-react';
 
 export default function SearchBar() {
   const [query, setQuery] = useState('');
