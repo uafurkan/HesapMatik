@@ -108,15 +108,34 @@ body {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
+  background: rgba(156, 163, 175, 0.5);
+  border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffb347;
+  background: rgba(107, 114, 128, 0.8);
+}
+
+@layer utilities {
+  .emoji-premium {
+    @apply inline-block drop-shadow-md saturate-150 transition-all duration-300 transform-gpu;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", sans-serif;
+  }
+  .emoji-premium:hover {
+    @apply scale-125 -translate-y-1 drop-shadow-[0_8px_16px_rgba(251,191,36,0.5)];
+  }
+  .dark .emoji-premium {
+    @apply drop-shadow-[0_2px_5px_rgba(255,255,255,0.15)];
+  }
+  .dark .emoji-premium:hover {
+    @apply drop-shadow-[0_8px_16px_rgba(251,191,36,0.4)];
+  }
 }
 
 input[type="number"]::-webkit-inner-spin-button,

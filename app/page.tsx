@@ -33,9 +33,9 @@ export default function Home() {
         <SearchBar />
         
         <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-8 text-[10px] sm:text-xs md:text-sm font-mono text-gray-700 dark:text-gray-400 px-2">
-          <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="text-amber-500 text-base sm:text-lg">⚡</span> 175+ Araç</div>
-          <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="text-blue-400 text-base sm:text-lg">⚖️</span> %100 Yasal</div>
-          <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="text-green-400 text-base sm:text-lg">💸</span> Ücretsiz</div>
+          <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="emoji-premium text-amber-500 text-base sm:text-lg">⚡</span> 175+ Araç</div>
+          <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="emoji-premium text-blue-400 text-base sm:text-lg">⚖️</span> %100 Yasal</div>
+          <div className="glass px-3 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-black/15 dark:border-white/5 flex items-center gap-1.5 sm:gap-2 shadow-lg"><span className="emoji-premium text-green-400 text-base sm:text-lg">💸</span> Ücretsiz</div>
         </div>
       </div>
 
@@ -64,17 +64,17 @@ export default function Home() {
 
       <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 animate-slide-up" style={{ animationDelay: '0.3s' }}>
         <div className="glass-card p-8 sm:p-10 rounded-2xl sm:rounded-3xl text-center group hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(77,139,255,0.1)] transition-all duration-300">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl mb-5 sm:mb-6 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-inner border border-blue-500/20">⚖️</div>
+          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl mb-5 sm:mb-6 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-inner border border-blue-500/20"><span className="emoji-premium">⚖️</span></div>
           <h3 className="font-bold text-xl sm:text-2xl mb-3 sm:mb-4 text-gray-900 dark:text-white font-syne">Güncel Mevzuat</h3>
           <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400 font-mono leading-relaxed">2026 yılına ait resmi rakamlar (asgari ücret, TÜFE, SGK vb.) ile kesin hesaplamalar.</p>
         </div>
         <div className="glass-card p-8 sm:p-10 rounded-2xl sm:rounded-3xl text-center group hover:border-amber-500/40 hover:shadow-[0_0_30px_rgba(255,179,71,0.1)] transition-all duration-300">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-amber-500/20 to-amber-500/5 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl mb-5 sm:mb-6 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-inner border border-amber-500/20">⚡</div>
+          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-amber-500/20 to-amber-500/5 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl mb-5 sm:mb-6 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-inner border border-amber-500/20"><span className="emoji-premium">⚡</span></div>
           <h3 className="font-bold text-xl sm:text-2xl mb-3 sm:mb-4 text-gray-900 dark:text-white font-syne">Hızlı & Ücretsiz</h3>
           <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400 font-mono leading-relaxed">Üyelik yok, bekleme yok. Hesaplamalarınızı saniyeler içinde tamamen ücretsiz yapın.</p>
         </div>
         <div className="glass-card p-8 sm:p-10 rounded-2xl sm:rounded-3xl text-center group hover:border-green-500/40 hover:shadow-[0_0_30px_rgba(0,232,135,0.1)] transition-all duration-300">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl mb-5 sm:mb-6 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-inner border border-green-500/20">📊</div>
+          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl mb-5 sm:mb-6 group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-inner border border-green-500/20"><span className="emoji-premium">📊</span></div>
           <h3 className="font-bold text-xl sm:text-2xl mb-3 sm:mb-4 text-gray-900 dark:text-white font-syne">Detaylı Grafik</h3>
           <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-400 font-mono leading-relaxed">Sonuçları sadece bir rakam olarak değil, detaylı dökümler ve interaktif grafiklerle görün.</p>
         </div>

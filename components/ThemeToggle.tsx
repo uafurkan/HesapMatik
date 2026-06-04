@@ -17,7 +17,7 @@ export default function ThemeToggle() {
       className="w-9 h-9 rounded-xl glass-card flex items-center justify-center hover:scale-105 transition-transform duration-300 text-lg hover:border-amber-500/50 shadow-sm z-50 text-gray-800 dark:text-white"
       aria-label="Tema Değiştir"
     >
-      {theme === "dark" ? "☀️" : "🌙"}
+      <span className="emoji-premium">{theme === "dark" ? "☀️" : "🌙"}</span>
     </button>
   );
 }

@@ -283,16 +283,10 @@ export default function HesaplamaClient({
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {relatedTools.map((tool) => (
-              <Link 
-                key={tool.slug} 
-                href={`/${kategori}/${tool.slug}`} 
-                className="glass-card rounded-xl p-5 border border-black/5 dark:border-white/5 hover:border-amber-500/30 hover:shadow-lg transition-all group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="text-3xl mb-3 group-hover:scale-110 transition-transform w-fit">{tool.icon}</div>
-                  <h3 className="font-bold text-gray-900 dark:text-white font-syne text-sm group-hover:text-amber-400 transition-colors mb-2">{tool.title}</h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 font-mono line-clamp-2">{tool.description}</p>
-                </div>
+              <Link key={tool.slug} href={`/${kategori}/${tool.slug}`} className="glass-card rounded-xl p-5 hover:-translate-y-1.5 transition-all duration-300 group hover:border-amber-500/50 hover:shadow-[0_10px_20px_rgba(255,179,71,0.1)] block">
+                <div className="text-3xl mb-3 group-hover:scale-110 transition-transform w-fit"><span className="emoji-premium">{tool.icon}</span></div>
+                <h4 className="font-bold text-gray-900 dark:text-gray-100 group-hover:text-amber-500 transition-colors font-syne">{tool.title}</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400 font-mono line-clamp-2">{tool.description}</p>
                 <div className="text-amber-500 font-bold font-mono text-xs mt-4 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                   Hemen Hesapla →
                 </div>
