@@ -20,6 +20,21 @@ export function hesaplaKiraArtis({ mevcutKira, tufeOran }: { mevcutKira: number;
 }
 
 export function hesaplaKidemTazminati({ brutAylikUcret, calismaSuresiAy }: { brutAylikUcret: number; calismaSuresiAy: number }) {
+  if (calismaSuresiAy < 12) {
+    return {
+      brutAylikUcret,
+      calismaSuresiYil: 0,
+      calismaSuresiAy: calismaSuresiAy,
+      gunlukBrut: Math.round((brutAylikUcret / 30) * 100) / 100,
+      yillikHak: 0,
+      tavanUygulandı: false,
+      toplamBrut: 0,
+      damgaVergisi: 0,
+      netTazminat: 0,
+      kanunDayanak: 'İş Kanunu Madde 14 (En az 1 yıl şartı sağlanamadı)'
+    }
+  }
+
   const tamYil = Math.floor(calismaSuresiAy / 12)
   const kalanAy = calismaSuresiAy % 12
   const gunlukBrut = brutAylikUcret / 30
