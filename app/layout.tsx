@@ -10,10 +10,16 @@ import ThemeToggle from "@/components/ThemeToggle";
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap" });
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hesapmatik.site'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "HesapMatik — Türkiye'nin Hesaplama Merkezi | Ücretsiz",
   description: "Kira artış, kıdem tazminatı, maaş, konut kredisi, BMI ve 50+ hesaplama aracı. 2026 güncel mevzuat. Tamamen ücretsiz.",
   keywords: ["hesaplama", "hesaplayıcı", "kira artış hesaplama", "kıdem tazminatı hesaplama", "maaş hesaplama", "net maaş hesaplama 2026"],
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({

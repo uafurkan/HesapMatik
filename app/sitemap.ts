@@ -1,5 +1,5 @@
 import { HESAPLAMA_DATA } from '@/lib/hesaplama-data'
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://hesapmatik.vercel.app'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://hesapmatik.site'
 
 export default function sitemap() {
   const staticRoutes = [{ url: BASE, priority: 1.0, changeFrequency: 'weekly' as const }]
