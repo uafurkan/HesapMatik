@@ -1,6 +1,6 @@
 import { checkRateLimit } from '@/lib/rateLimit'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 interface ExplainRequest {
   title: string
