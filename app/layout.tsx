@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import Script from "next/script";
 import Link from "next/link";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
+import AdsConsentManager from "@/components/AdsConsentManager";
 
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap" });
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
@@ -29,13 +29,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr" suppressHydrationWarning>
-      <head>
-        <Script
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID || 'ca-pub-XXXXXXXXXX'}`}
-          strategy="lazyOnload"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body className={`${syne.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col relative bg-[#FDFBF7] dark:bg-[#030305] text-gray-900 dark:text-[#f0f0f5] transition-colors duration-300`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           {/* Ambient Glowing Orbs */}
@@ -59,9 +52,15 @@ export default function RootLayout({
         <footer className="glass border-t border-black/10 dark:border-white/5 py-10 sm:py-12 mt-16 sm:mt-20 text-center text-xs sm:text-sm font-mono text-gray-600 dark:text-gray-500 relative z-10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center gap-4">
             <div className="text-2xl font-bold font-syne text-gray-900 dark:text-white opacity-20 tracking-widest">HESAPMATİK</div>
-            <p>© 2026 HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır, kesin bir yasal dayanak oluşturmaz.</p>
+            <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2">
+              <Link href="/gizlilik" className="hover:text-amber-500 transition-colors">Gizlilik Politikası</Link>
+              <Link href="/kullanim-kosullari" className="hover:text-amber-500 transition-colors">Kullanım Koşulları</Link>
+              <a href="mailto:iletisim@hesapmatik.site" className="hover:text-amber-500 transition-colors">iletisim@hesapmatik.site</a>
+            </nav>
+            <p>© {new Date().getFullYear()} HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır, kesin bir yasal dayanak oluşturmaz.</p>
           </div>
         </footer>
+        <AdsConsentManager adsenseId={process.env.NEXT_PUBLIC_ADSENSE_ID || 'ca-pub-XXXXXXXXXX'} />
         <Analytics />
         </ThemeProvider>
       </body>

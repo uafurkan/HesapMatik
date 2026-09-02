@@ -1,3 +1,5 @@
+import { checkRateLimit } from '@/lib/rateLimit'
+
 export const runtime = 'edge'
 
 interface ExplainRequest {
@@ -8,6 +10,13 @@ interface ExplainRequest {
   result: { label: string; value: string }[]
 }
 
+// Not: edge isolate başına bellek içi limitleyici — kesin/dağıtık bir limit değil,
+// ancak tek bir istemcinin uçtan uca script ile Groq maliyetini şişirmesini engeller.
+const RATE_LIMIT = 8
+const RATE_WINDOW_MS = 60_000
+const MAX_ITEMS = 30
+const MAX_FIELD_LEN = 300
+
 export async function POST(req: Request) {
   const apiKey = process.env.GROQ_API_KEY
   if (!apiKey) {
@@ -15,6 +24,11 @@ export async function POST(req: Request) {
       { error: 'AI açıklama özelliği şu anda yapılandırılmamış.' },
       { status: 503 }
     )
+  }
+
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+  if (!checkRateLimit(ip, RATE_LIMIT, RATE_WINDOW_MS)) {
+    return Response.json({ error: 'Çok fazla istek gönderildi, lütfen biraz sonra tekrar deneyin.' }, { status: 429 })
   }
 
   let body: ExplainRequest
@@ -25,18 +39,27 @@ export async function POST(req: Request) {
   }
 
   const { title, description, kaynaklar, inputs, result } = body
-  if (!title || !Array.isArray(inputs) || !Array.isArray(result)) {
+  if (!title || typeof title !== 'string' || !Array.isArray(inputs) || !Array.isArray(result)) {
     return Response.json({ error: 'Eksik veri.' }, { status: 400 })
   }
+  if (inputs.length > MAX_ITEMS || result.length > MAX_ITEMS || (kaynaklar?.length ?? 0) > MAX_ITEMS) {
+    return Response.json({ error: 'Geçersiz istek.' }, { status: 400 })
+  }
+  const trim = (s: unknown) => String(s ?? '').slice(0, MAX_FIELD_LEN)
+  const safeTitle = trim(title)
+  const safeDescription = description ? trim(description) : undefined
+  const safeInputs = inputs.map(i => ({ label: trim(i?.label), value: trim(i?.value) }))
+  const safeResult = result.map(r => ({ label: trim(r?.label), value: trim(r?.value) }))
+  const safeKaynaklar = kaynaklar?.map(trim)
 
-  const inputLines = inputs.map(i => `- ${i.label}: ${i.value}`).join('\n')
-  const resultLines = result.map(r => `- ${r.label}: ${r.value}`).join('\n')
-  const kaynakLine = kaynaklar && kaynaklar.length > 0 ? `\nYasal dayanak: ${kaynaklar.join(', ')}` : ''
+  const inputLines = safeInputs.map(i => `- ${i.label}: ${i.value}`).join('\n')
+  const resultLines = safeResult.map(r => `- ${r.label}: ${r.value}`).join('\n')
+  const kaynakLine = safeKaynaklar && safeKaynaklar.length > 0 ? `\nYasal dayanak: ${safeKaynaklar.join(', ')}` : ''
 
   const systemPrompt = `Sen HesapMatik adlı Türkiye hesaplama sitesinde çalışan, alanında uzman bir finans/hukuk/sağlık danışmanı asistansın. Kullanıcılara hesaplama sonuçlarını sade ama derinlikli bir şekilde açıklıyorsun. Sadece sonucu tekrar etmiyorsun; sonucun kullanıcı için PRATİKTE ne anlama geldiğini, nelere dikkat etmesi gerektiğini ve varsa mantıklı bir sonraki adımı da söylüyorsun. Uydurma rakam veya yasa maddesi üretme; sadece sana verilen verilere dayan.`
 
-  const prompt = `Hesaplayıcı: ${title}
-${description ? `Açıklama: ${description}` : ''}
+  const prompt = `Hesaplayıcı: ${safeTitle}
+${safeDescription ? `Açıklama: ${safeDescription}` : ''}
 
 Kullanıcının girdiği değerler:
 ${inputLines}
