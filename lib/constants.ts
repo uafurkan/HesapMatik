@@ -1,15 +1,16 @@
 // ============================================================
-// ASGARİ ÜCRET (2026 H2 — Temmuz 2026 itibariyle)
+// ASGARİ ÜCRET (1 Ocak 2026 itibariyle — yıl boyunca geçerli;
+// Temmuz 2026 için resmi bir ara zam açıklanmadı)
 // ============================================================
 export const ASGARI_UCRET_BRUT = 33030.00  // TL/ay — brüt
 export const ASGARI_UCRET_NET = 28075.50   // TL/ay — net
 export const GUNLUK_ASGARI_UCRET = 33030.00 / 30  // = 1101.00 TL
 
 // ============================================================
-// KIDEM TAZMİNATI (2026 H2)
+// KIDEM TAZMİNATI (2026 H2 — 1 Temmuz 2026 itibariyle)
 // ============================================================
-export const KIDEM_TAZMINATI_TAVAN = 64948.77  // TL — bir yıl için üst sınır
-// Kaynak: Resmi Gazete, her yıl Ocak ve Temmuz güncellenir
+export const KIDEM_TAZMINATI_TAVAN = 73729.87  // TL — bir yıl için üst sınır (1 Temmuz - 31 Aralık 2026)
+// Kaynak: Resmi Gazete, her yıl Ocak ve Temmuz memur maaş katsayısına göre güncellenir
 
 // ============================================================
 // SGK ORANLARI (%)
@@ -55,7 +56,9 @@ export const IHBAR_HAFTALARI = [
 // 12 aylık TÜFE ortalaması — TÜİK açıklama tarihleriyle güncelle
 // Kaynak: https://data.tuik.gov.tr
 export const TUFE_12_AYLIK_ORTALAMA = {
-  '2026-05': 32.43,   // Mayıs 2026 Kira Artış Oranı (Nisan enflasyonuna göre)
+  '2026-07': 31.90,   // Temmuz 2026 Kira Artış Oranı
+  '2026-06': 32.24,   // Haziran 2026 Kira Artış Oranı
+  '2026-05': 32.43,   // Mayıs 2026 Kira Artış Oranı
   '2026-04': 32.82,   // Nisan 2026 Kira Artış Oranı
   '2026-03': 33.15,
   '2026-02': 34.20,
@@ -64,9 +67,10 @@ export const TUFE_12_AYLIK_ORTALAMA = {
   '2025-11': 39.80,
   '2025-10': 41.20,
 }
-// Son geçerli oran (en güncel değer):
-export const TUFE_SON_ORAN = 32.43
-export const TUFE_SON_TARIH = 'Mayıs 2026'
+// Son geçerli oran (en güncel doğrulanmış değer — TÜİK her ayın 3'ünde bir
+// sonraki aya ait oranı açıklar; bu sabit periyodik olarak elle güncellenmelidir)
+export const TUFE_SON_ORAN = 31.90
+export const TUFE_SON_TARIH = 'Temmuz 2026'
 
 // ============================================================
 // KONUT KREDİSİ
