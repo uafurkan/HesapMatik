@@ -14,6 +14,9 @@ export async function generateMetadata({ params }: { params: Promise<{ kategori:
   return {
     title: `${cat.name} Hesaplamaları | HesapMatik`,
     description: `${cat.name} kategorisindeki ${cat.hesaplamalar.length} hesaplama aracını ücretsiz kullanın. ${cat.description || ''}`,
+    alternates: {
+      canonical: `/${kategori}`
+    }
   }
 }
 

@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ kategori:
     description: desc,
     keywords: [data.title.toLowerCase(), `${data.title.toLowerCase()} hesaplama`, `${data.title.toLowerCase()} 2026`, "hesaplama"],
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/${kategori}/${hesaplama}`
+      canonical: `/${kategori}/${hesaplama}`
     }
   }
 }

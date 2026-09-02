@@ -1,6 +1,6 @@
 {
   "env": {
-    "NEXT_PUBLIC_SITE_URL": "https://hesapmatik.vercel.app",
+    "NEXT_PUBLIC_SITE_URL": "https://hesapmatik.site",
     "NEXT_PUBLIC_ADSENSE_ID": "ca-pub-XXXXXXXXXX"
   },
   "headers": [

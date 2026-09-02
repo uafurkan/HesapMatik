@@ -227,11 +227,11 @@ export const HESAPLAMA_DATA: Kategori[] = [
         description: "%15 KKDF ve %5 BSMV dahil taşıt kredisi ödeme planı.",
         formulaKey: "hesaplaKrediGenel",
         inputs: [
-          { id:"anapara", label:"Kredi Miktarı (TL)", type:"number", required:true },
-          { id:"yillikFaiz", label:"Yıllık Faiz Oranı (%)", type:"number", defaultValue:40, required:true },
-          { id:"vadeAy", label:"Vade (Ay)", type:"number", defaultValue:36, required:true },
-          { id:"kkdfYuzde", label:"KKDF Oranı (%)", type:"number", defaultValue:15, required:true },
-          { id:"bsmvYuzde", label:"BSMV Oranı (%)", type:"number", defaultValue:5, required:true }
+          { id:"anapara", label:"Kredi Miktarı (TL)", type:"number", min:0, required:true },
+          { id:"yillikFaiz", label:"Yıllık Faiz Oranı (%)", type:"number", defaultValue:40, min:0, max:150, required:true },
+          { id:"vadeAy", label:"Vade (Ay)", type:"number", defaultValue:36, min:1, max:60, required:true },
+          { id:"kkdfYuzde", label:"KKDF Oranı (%)", type:"number", defaultValue:15, min:0, max:50, required:true },
+          { id:"bsmvYuzde", label:"BSMV Oranı (%)", type:"number", defaultValue:5, min:0, max:50, required:true }
         ] },
       { slug: "enflasyon-etkisi", title: "Enflasyon Satın Alma Gücü",
         description: "Enflasyonun yıllar içindeki paranızın değerine olan etkisini hesaplayın.",
@@ -280,9 +280,9 @@ export const HESAPLAMA_DATA: Kategori[] = [
         description: "Bireysel Emeklilik Sisteminde %30 devlet katkılı birikim simülasyonu.",
         formulaKey: "hesaplaBES",
         inputs: [
-          { id:"aylikKatki", label:"Aylık Katkı Payı (TL)", type:"number", defaultValue:2000, required:true },
-          { id:"sureYil", label:"Sistemde Kalış Süresi (Yıl)", type:"number", defaultValue:10, required:true },
-          { id:"fonGetirisi", label:"Beklenen Yıllık Fon Getirisi (%)", type:"number", defaultValue:25, required:true }
+          { id:"aylikKatki", label:"Aylık Katkı Payı (TL)", type:"number", defaultValue:2000, min:0, required:true },
+          { id:"sureYil", label:"Sistemde Kalış Süresi (Yıl)", type:"number", defaultValue:10, min:1, max:60, required:true },
+          { id:"fonGetirisi", label:"Beklenen Yıllık Fon Getirisi (%)", type:"number", defaultValue:25, min:0, max:100, required:true }
         ] },
       { slug: "temettu-hesaplama", title: "Temettü (Kâr Payı) Net Getiri",
         description: "Brüt temettü gelirinden %10 stopaj kesintisi sonrası net kazancı hesaplayın.",
@@ -1391,8 +1391,8 @@ export const HESAPLAMA_DATA: Kategori[] = [
         description: "n elemanlı kümenin r'li kombinasyon ve permütasyon alacak formülleri.",
         formulaKey: "hesaplaKombinasyonPermutasyon",
         inputs: [
-          { id:"n", label:"n Değeri (Eleman sayısı)", type:"number", required:true },
-          { id:"r", label:"r Değeri (Seçim sayısı)", type:"number", required:true }
+          { id:"n", label:"n Değeri (Eleman sayısı)", type:"number", min:0, max:170, required:true },
+          { id:"r", label:"r Değeri (Seçim sayısı)", type:"number", min:0, max:170, required:true }
         ] },
       { slug: "hacim-cevirici", title: "Hacim Birimleri Çevirici",
         description: "m³, litre, desilitre, galon ve varil hacim birimleri arası dönüşüm.",
