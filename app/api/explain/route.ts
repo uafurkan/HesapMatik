@@ -9,7 +9,7 @@ interface ExplainRequest {
 }
 
 export async function POST(req: Request) {
-  const apiKey = process.env.ANTHROPIC_API_KEY
+  const apiKey = process.env.GROQ_API_KEY
   if (!apiKey) {
     return Response.json(
       { error: 'AI açıklama özelliği şu anda yapılandırılmamış.' },
@@ -33,9 +33,9 @@ export async function POST(req: Request) {
   const resultLines = result.map(r => `- ${r.label}: ${r.value}`).join('\n')
   const kaynakLine = kaynaklar && kaynaklar.length > 0 ? `\nYasal dayanak: ${kaynaklar.join(', ')}` : ''
 
-  const prompt = `Sen HesapMatik adlı bir hesaplama sitesinde kullanıcılara sonuçlarını sade Türkçeyle açıklayan bir asistansın.
+  const systemPrompt = `Sen HesapMatik adlı Türkiye hesaplama sitesinde çalışan, alanında uzman bir finans/hukuk/sağlık danışmanı asistansın. Kullanıcılara hesaplama sonuçlarını sade ama derinlikli bir şekilde açıklıyorsun. Sadece sonucu tekrar etmiyorsun; sonucun kullanıcı için PRATİKTE ne anlama geldiğini, nelere dikkat etmesi gerektiğini ve varsa mantıklı bir sonraki adımı da söylüyorsun. Uydurma rakam veya yasa maddesi üretme; sadece sana verilen verilere dayan.`
 
-Hesaplayıcı: ${title}
+  const prompt = `Hesaplayıcı: ${title}
 ${description ? `Açıklama: ${description}` : ''}
 
 Kullanıcının girdiği değerler:
@@ -44,29 +44,42 @@ ${inputLines}
 Hesaplanan sonuç:
 ${resultLines}${kaynakLine}
 
-Görevin: Bu sonucu, hesaplamayı hiç bilmeyen sıradan bir kullanıcıya 3-5 cümlede, günlük dilde açıkla. Sonucun ne anlama geldiğini, girilen değerlerle nasıl bağlantılı olduğunu belirt. Gereksiz teknik jargon kullanma, selamlama/kapanış cümlesi yazma, doğrudan açıklamaya gir. Yasal dayanak varsa kısaca değin ama uzatma.`
+Görevin: Bu sonucu kullanıcıya açıkla. Şu yapıyı izle:
+1) Sonucun ne anlama geldiğini 1-2 cümlede günlük dille özetle.
+2) Sonucun girilen değerlerle nasıl bağlantılı olduğunu kısaca belirt (örn. hangi değer sonucu en çok etkiliyor).
+3) Varsa kullanıcının dikkat etmesi gereken bir nüans, risk veya pratik bir öneri ekle (yasal dayanak varsa kısaca değin).
+Toplam 4-6 cümle, akıcı paragraf halinde yaz. Selamlama/kapanış cümlesi, madde işareti, başlık kullanma; doğrudan açıklamaya gir.`
 
-  try {
-    const aiRes = await fetch('https://api.anthropic.com/v1/messages', {
+  const callGroq = (model: string) =>
+    fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
+        authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 400,
-        messages: [{ role: 'user', content: prompt }],
+        model,
+        max_tokens: 500,
+        temperature: 0.4,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: prompt }
+        ],
       }),
     })
+
+  try {
+    let aiRes = await callGroq('openai/gpt-oss-120b')
+    if (!aiRes.ok && (aiRes.status === 400 || aiRes.status === 404)) {
+      aiRes = await callGroq('llama-3.3-70b-versatile')
+    }
 
     if (!aiRes.ok) {
       return Response.json({ error: 'AI açıklama alınamadı, lütfen tekrar deneyin.' }, { status: 502 })
     }
 
     const data = await aiRes.json()
-    const explanation = data?.content?.[0]?.text?.trim()
+    const explanation = data?.choices?.[0]?.message?.content?.trim()
     if (!explanation) {
       return Response.json({ error: 'AI açıklama alınamadı, lütfen tekrar deneyin.' }, { status: 502 })
     }
