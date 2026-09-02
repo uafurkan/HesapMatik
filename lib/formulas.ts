@@ -1825,11 +1825,11 @@ export function hesaplaEmlakciKomisyonu({ mülkDegeri }: { mülkDegeri: number }
 
 export function hesaplaKiraAmortisman({ mülkAlisFiyati, aylikKiraGetirisi }: { mülkAlisFiyati: number; aylikKiraGetirisi: number }) {
   const yillik = aylikKiraGetirisi * 12
-  const amortismanYili = mülkAlisFiyati / (yillik || 1)
+  const amortismanYili = yillik > 0 ? mülkAlisFiyati / yillik : null
   return {
     yillikKiraGeliri: Math.round(yillik * 100) / 100,
-    amortismanSüresiYil: Math.round(amortismanYili * 10) / 10,
-    yillikNetVerimYuzde: Math.round((yillik / mülkAlisFiyati) * 10000) / 100
+    amortismanSüresiYil: amortismanYili !== null ? Math.round(amortismanYili * 10) / 10 : 'Kira geliri girilmedi',
+    yillikNetVerimYuzde: mülkAlisFiyati > 0 ? Math.round((yillik / mülkAlisFiyati) * 10000) / 100 : 0
   }
 }
 
@@ -1941,8 +1941,8 @@ export function hesaplaTapuKoordinat({ x, y }: { x: number; y: number }) {
   return {
     girilenX: x,
     girilenY: y,
-    donusturulenX: Math.round(x + 120.5 * 100) / 100,
-    donusturulenY: Math.round(y - 80.2 * 100) / 100,
+    donusturulenX: Math.round((x + 120.5) * 100) / 100,
+    donusturulenY: Math.round((y - 80.2) * 100) / 100,
     sistem: 'ED50 -> WGS84 Dönüşümü yapıldı'
   }
 }
@@ -2006,7 +2006,7 @@ export function hesaplaKilitParkeTasi({ alanM2 }: { alanM2: number }) {
 
 export function hesaplaMerdivenBasamakRiht({ katYuksekligiCm }: { katYuksekligiCm: number }) {
   const idealRiht = 17
-  const basamakAdedi = Math.round(katYuksekligiCm / idealRiht)
+  const basamakAdedi = Math.max(1, Math.round(katYuksekligiCm / idealRiht))
   const gercekRiht = katYuksekligiCm / basamakAdedi
   return {
     toplamBasamakAdedi: basamakAdedi,
@@ -2119,6 +2119,9 @@ export function hesaplaDenklemCozucu({ a, b, c }: { a: number; b: number; c: num
 }
 
 export function hesaplaKombinasyonPermutasyon({ n, r }: { n: number; r: number }) {
+  if (r > n) {
+    return { hata: 'r, n değerinden büyük olamaz', faktöriyelN: null, permutasyonN_R: null, kombinasyonN_R: null }
+  }
   const f = (val: number): number => (val <= 1 ? 1 : val * f(val - 1))
   const perm = f(n) / f(n - r)
   const komb = perm / f(r)
