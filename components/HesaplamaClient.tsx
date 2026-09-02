@@ -5,7 +5,7 @@ import { Hesaplama } from '@/lib/hesaplama-data';
 import * as formulas from '@/lib/formulas';
 import GrafikWrapper, { CHART_COLORS } from './GrafikWrapper';
 import AdSlot from './AdSlot';
-import { Sparkles, Coins, Scale, GraduationCap, HeartPulse, Zap, Home, Calculator, Info } from "lucide-react";
+import { Sparkles, Coins, Scale, GraduationCap, HeartPulse, Zap, Home, Calculator, Info, Bot, Loader2, X } from "lucide-react";
 
 const CategoryIconMap: Record<string, React.ReactNode> = {
   "💰": <Coins size={36} className="text-amber-500 drop-shadow-md" />,
@@ -31,6 +31,10 @@ export default function HesaplamaClient({
   const [inputs, setInputs] = useState<Record<string, any>>({});
   const [result, setResult] = useState<any>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiExplanation, setAiExplanation] = useState<string | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
 
   useEffect(() => {
     const defaults: Record<string, any> = {};
@@ -80,6 +84,53 @@ export default function HesaplamaClient({
     
     return () => clearTimeout(timer);
   }, [inputs, data.formulaKey, data.slug]);
+
+  useEffect(() => {
+    setAiOpen(false);
+    setAiExplanation(null);
+    setAiError(null);
+  }, [result, data.slug]);
+
+  const resultEntries = result
+    ? Object.entries(result).filter(([, v]) => typeof v === 'number' || typeof v === 'string')
+    : [];
+
+  const handleAiExplain = async () => {
+    if (!result) return;
+    setAiOpen(true);
+    setAiLoading(true);
+    setAiError(null);
+    setAiExplanation(null);
+    try {
+      const res = await fetch('/api/explain', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          title: data.title,
+          description: data.description,
+          kaynaklar: data.kaynaklar,
+          inputs: data.inputs.map(i => ({
+            label: i.label,
+            value: `${inputs[i.id] ?? ''}${i.unit ? ' ' + i.unit : ''}`
+          })),
+          result: resultEntries.map(([key, value]) => ({
+            label: key.replace(/([A-Z])/g, ' $1').trim(),
+            value: typeof value === 'number' ? value.toLocaleString('tr-TR') : String(value)
+          }))
+        })
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        setAiError(json.error || 'Açıklama alınamadı.');
+      } else {
+        setAiExplanation(json.explanation);
+      }
+    } catch {
+      setAiError('Açıklama alınamadı, bağlantınızı kontrol edin.');
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   let chartData: any[] = [];
   if (result && data.grafik) {
@@ -187,12 +238,51 @@ export default function HesaplamaClient({
             <div className="glass-card rounded-3xl p-8 border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden animate-fade-in">
               <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] -mr-20 -mt-20 pointer-events-none"></div>
               
-              <h2 className="text-2xl font-black mb-6 font-syne border-b border-black/10 dark:border-white/10 pb-4 text-gray-900 dark:text-white drop-shadow-md flex items-center gap-3">
-                <span className="text-amber-500 inline-flex items-center"><Sparkles size={24} className="drop-shadow-md" /></span> Hesaplama Sonucu
-              </h2>
-              
+              <div className="flex items-center justify-between gap-3 mb-6 border-b border-black/10 dark:border-white/10 pb-4 flex-wrap">
+                <h2 className="text-2xl font-black font-syne text-gray-900 dark:text-white drop-shadow-md flex items-center gap-3">
+                  <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400/25 to-amber-600/10 border border-amber-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,179,71,0.15)]">
+                    <Sparkles size={19} className="text-amber-500 drop-shadow-sm" />
+                  </span>
+                  Hesaplama Sonucu
+                </h2>
+                <button
+                  onClick={handleAiExplain}
+                  disabled={aiLoading}
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-500 dark:text-blue-400 text-xs sm:text-sm font-bold font-mono hover:bg-blue-500/20 hover:border-blue-500/50 transition-all disabled:opacity-60 disabled:cursor-wait"
+                >
+                  {aiLoading ? <Loader2 size={16} className="animate-spin" /> : <Bot size={16} />}
+                  AI ile Açıkla
+                </button>
+              </div>
+
+              {aiOpen && (
+                <div className="mb-6 sm:mb-8 bg-blue-500/5 dark:bg-blue-500/10 border border-blue-500/20 rounded-2xl p-5 relative animate-fade-in">
+                  <button
+                    onClick={() => setAiOpen(false)}
+                    aria-label="Kapat"
+                    className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors"
+                  >
+                    <X size={16} />
+                  </button>
+                  <div className="flex items-center gap-2 text-blue-500 dark:text-blue-400 text-xs font-bold font-mono uppercase tracking-widest mb-3">
+                    <Bot size={15} /> AI Açıklaması
+                  </div>
+                  {aiLoading && (
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm font-mono">
+                      <Loader2 size={16} className="animate-spin" /> Sonucunuz analiz ediliyor...
+                    </div>
+                  )}
+                  {aiError && !aiLoading && (
+                    <p className="text-rose-500 text-sm font-mono">{aiError}</p>
+                  )}
+                  {aiExplanation && !aiLoading && (
+                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed font-mono whitespace-pre-line">{aiExplanation}</p>
+                  )}
+                </div>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
-                {Object.entries(result).filter(([k,v]) => typeof v === 'number' || typeof v === 'string').map(([key, value]) => {
+                {resultEntries.map(([key, value]) => {
                   const isNumber = typeof value === 'number';
                   const valueStr = isNumber ? value.toLocaleString('tr-TR') : (value as string);
                   const isLongText = !isNumber && valueStr.length > 25;
