@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import AdSlot from '@/components/AdSlot'
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hesapmatik.site'
+
 export async function generateStaticParams() {
   return HESAPLAMA_DATA.map(k => ({ kategori: k.slug }))
 }
@@ -25,8 +27,18 @@ export default async function CategoryPage({ params }: { params: Promise<{ kateg
   const cat = HESAPLAMA_DATA.find(k => k.slug === kategori)
   if (!cat) notFound()
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": SITE_URL },
+      { "@type": "ListItem", "position": 2, "name": cat.name, "item": `${SITE_URL}/${kategori}` }
+    ]
+  }
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 md:py-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <div className="text-xs sm:text-sm font-mono text-gray-500 mb-6 flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
         <Link href="/" className="hover:text-amber-500 transition-colors">Ana Sayfa</Link>
         <span>&gt;</span>

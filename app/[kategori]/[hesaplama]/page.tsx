@@ -1,6 +1,9 @@
 import { findHesaplama, getAllSlugs, HESAPLAMA_DATA } from '@/lib/hesaplama-data'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import HesaplamaClient from '@/components/HesaplamaClient'
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hesapmatik.site'
 
 export async function generateStaticParams() {
   return getAllSlugs()
@@ -82,14 +85,34 @@ export default async function HesaplamaPage({ params }: { params: Promise<{ kate
         }))
     : []
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": SITE_URL },
+      { "@type": "ListItem", "position": 2, "name": categoryData?.name || kategori, "item": `${SITE_URL}/${kategori}` },
+      { "@type": "ListItem", "position": 3, "name": data.title, "item": `${SITE_URL}/${kategori}/${hesaplama}` }
+    ]
+  }
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <HesaplamaClient 
-        data={data} 
-        kategori={kategori} 
-        faqs={faqs} 
-        relatedTools={relatedTools} 
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8">
+        <nav aria-label="breadcrumb" className="text-xs sm:text-sm font-mono text-gray-500 flex items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
+          <Link href="/" className="hover:text-amber-500 transition-colors">Ana Sayfa</Link>
+          <span>&gt;</span>
+          <Link href={`/${kategori}`} className="hover:text-amber-500 transition-colors">{categoryData?.name || kategori}</Link>
+          <span>&gt;</span>
+          <span className="text-gray-700 dark:text-gray-300">{data.title}</span>
+        </nav>
+      </div>
+      <HesaplamaClient
+        data={data}
+        kategori={kategori}
+        faqs={faqs}
+        relatedTools={relatedTools}
       />
     </>
   )
