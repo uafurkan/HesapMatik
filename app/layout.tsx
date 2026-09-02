@@ -20,6 +20,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    siteName: "HesapMatik",
+    title: "HesapMatik — Türkiye'nin Hesaplama Merkezi | Ücretsiz",
+    description: "Kira artış, kıdem tazminatı, maaş, konut kredisi, BMI ve 50+ hesaplama aracı. 2026 güncel mevzuat. Tamamen ücretsiz.",
+    url: SITE_URL,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HesapMatik — Türkiye'nin Hesaplama Merkezi | Ücretsiz",
+    description: "Kira artış, kıdem tazminatı, maaş, konut kredisi, BMI ve 50+ hesaplama aracı. 2026 güncel mevzuat.",
+  },
   verification: process.env.NEXT_PUBLIC_GSC_VERIFICATION
     ? { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION }
     : undefined,
