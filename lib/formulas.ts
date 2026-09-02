@@ -139,7 +139,7 @@ export function hesaplaNetMaas({ brutMaas, yon }: { brutMaas: number; yon: 'brut
       toplamKesinti: Math.round(netHesap.toplamKesinti * 100) / 100,
       netMaas: Math.round(brutMaas * 100) / 100,
       isvMaliyet: Math.round(netHesap.isvMaliyet * 100) / 100,
-      kesintiYuzdesi: Math.round((netHesap.toplamKesinti / brut) * 10000) / 100
+      kesintiYuzdesi: brut > 0 ? Math.round((netHesap.toplamKesinti / brut) * 10000) / 100 : 0
     }
   } else {
     const netHesap = hesaplaNetMaasTek(brutMaas)
@@ -152,7 +152,7 @@ export function hesaplaNetMaas({ brutMaas, yon }: { brutMaas: number; yon: 'brut
       toplamKesinti: Math.round(netHesap.toplamKesinti * 100) / 100,
       netMaas: Math.round(netHesap.netMaas * 100) / 100,
       isvMaliyet: Math.round(netHesap.isvMaliyet * 100) / 100,
-      kesintiYuzdesi: Math.round((netHesap.toplamKesinti / brutMaas) * 10000) / 100
+      kesintiYuzdesi: brutMaas > 0 ? Math.round((netHesap.toplamKesinti / brutMaas) * 10000) / 100 : 0
     }
   }
 }
@@ -166,7 +166,7 @@ export function hesaplaBrutNetCevirici({ miktar, yon }: { miktar: number; yon: '
 // 6. KONUT KREDİSİ
 export function hesaplaKonutKredisi({ anapara, aylikFaizYuzde, vadeSuresiAy }: { anapara: number; aylikFaizYuzde: number; vadeSuresiAy: number }) {
   const r = aylikFaizYuzde / 100
-  const taksit = anapara * (r * Math.pow(1 + r, vadeSuresiAy)) / (Math.pow(1 + r, vadeSuresiAy) - 1)
+  const taksit = r === 0 ? anapara / vadeSuresiAy : anapara * (r * Math.pow(1 + r, vadeSuresiAy)) / (Math.pow(1 + r, vadeSuresiAy) - 1)
   const toplamOdeme = taksit * vadeSuresiAy
   const toplamFaiz = toplamOdeme - anapara
   const tablo: Array<{ ay: number; taksit: number; anapara: number; faiz: number; kalanAnapara: number }> = []
@@ -186,7 +186,7 @@ export function hesaplaKonutKredisi({ anapara, aylikFaizYuzde, vadeSuresiAy }: {
     aylikTaksit: Math.round(taksit * 100) / 100,
     toplamOdeme: Math.round(toplamOdeme * 100) / 100,
     toplamFaiz: Math.round(toplamFaiz * 100) / 100,
-    faizOrani: Math.round((toplamFaiz / anapara) * 10000) / 100,
+    faizOrani: anapara > 0 ? Math.round((toplamFaiz / anapara) * 10000) / 100 : 0,
     amortismanTablosu: tablo
   }
 }
@@ -214,7 +214,7 @@ export function hesaplaBilesikFaiz({ anapara, yillikFaiz, sure, periyot }: { ana
     anapara,
     sonDeger: Math.round(sonDeger * 100) / 100,
     kazanc: Math.round(kazanc * 100) / 100,
-    toplamGetiri: Math.round((kazanc / anapara) * 10000) / 100
+    toplamGetiri: anapara > 0 ? Math.round((kazanc / anapara) * 10000) / 100 : 0
   }
 }
 
@@ -263,7 +263,7 @@ export function hesaplaKrediKartıAsgari({ toplamBorc }: { toplamBorc: number })
 export function hesaplaKrediGenel({ anapara, yillikFaiz, vadeAy, bsmvYuzde, kkdfYuzde }: { anapara: number; yillikFaiz: number; vadeAy: number; bsmvYuzde: number; kkdfYuzde: number }) {
   const aylikFaiz = (yillikFaiz / 12) / 100
   const vergiDahilFaiz = aylikFaiz * (1 + bsmvYuzde / 100 + kkdfYuzde / 100)
-  const taksit = anapara * (vergiDahilFaiz * Math.pow(1 + vergiDahilFaiz, vadeAy)) / (Math.pow(1 + vergiDahilFaiz, vadeAy) - 1)
+  const taksit = vergiDahilFaiz === 0 ? anapara / vadeAy : anapara * (vergiDahilFaiz * Math.pow(1 + vergiDahilFaiz, vadeAy)) / (Math.pow(1 + vergiDahilFaiz, vadeAy) - 1)
   const toplamOdeme = taksit * vadeAy
   const toplamFaizVeVergi = toplamOdeme - anapara
 
@@ -272,7 +272,7 @@ export function hesaplaKrediGenel({ anapara, yillikFaiz, vadeAy, bsmvYuzde, kkdf
     aylikTaksit: Math.round(taksit * 100) / 100,
     toplamGeriOdeme: Math.round(toplamOdeme * 100) / 100,
     toplamFaizVeVergi: Math.round(toplamFaizVeVergi * 100) / 100,
-    maliyetOraniYuzde: Math.round((toplamFaizVeVergi / anapara) * 10000) / 100
+    maliyetOraniYuzde: anapara > 0 ? Math.round((toplamFaizVeVergi / anapara) * 10000) / 100 : 0
   }
 }
 
