@@ -1,0 +1,16 @@
+# HesapMatik
+
+> Türkiye'nin ücretsiz hesaplama merkezi. Kira artış oranı, kıdem/ihbar tazminatı,
+> net maaş, konut kredisi, BMI ve 50'den fazla finans, hukuk, sağlık ve eğitim
+> hesaplayıcısı; güncel 2026 mevzuatına ve TÜİK/TCMB verilerine dayanır.
+
+Tüm hesaplama sonuçları bilgilendirme amaçlıdır, profesyonel/hukuki tavsiye
+yerine geçmez. Site Türkçe'dir ve kategori bazlı düzenlenmiştir
+(finans, iş hukuku, sağlık, faturalar, konut & inşaat, matematik, eğitim).
+
+## Sayfalar
+
+- [Ana Sayfa](https://hesapmatik.site/): Kategori listesi ve öne çıkan hesaplayıcılar
+- [Sitemap](https://hesapmatik.site/sitemap.xml): Tüm hesaplayıcı ve kategori sayfalarının tam listesi
+- [Gizlilik Politikası](https://hesapmatik.site/gizlilik)
+- [Kullanım Koşulları](https://hesapmatik.site/kullanim-kosullari)

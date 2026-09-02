@@ -345,9 +345,11 @@ export default function HesaplamaClient({
             </div>
           ) : (
             <div className="h-64 glass-card rounded-3xl flex items-center justify-center border border-black/5 dark:border-white/5 border-dashed shadow-xl">
-              <div className="text-center">
-                <div className="mb-4 opacity-50 flex justify-center"><Sparkles size={48} className="text-amber-400 drop-shadow-md" /></div>
-                <div className="text-gray-600 dark:text-gray-400 font-mono max-w-[200px] mx-auto text-sm leading-relaxed">
+              <div className="text-center flex flex-col items-center">
+                <div className={`mb-5 w-16 h-16 rounded-2xl bg-gradient-to-br ${resultIcon.badge} border flex items-center justify-center shrink-0 ${resultIcon.glow} ring-1 ring-white/10 animate-pulse-slow`}>
+                  <ResultIcon size={28} strokeWidth={2} className={`${resultIcon.icon} drop-shadow-sm`} />
+                </div>
+                <div className="text-gray-600 dark:text-gray-400 font-mono max-w-[220px] mx-auto text-sm leading-relaxed">
                   Hesaplama sonucunu görmek için sol taraftaki formu doldurun.
                 </div>
               </div>
