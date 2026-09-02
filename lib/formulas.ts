@@ -755,6 +755,36 @@ export function hesaplaIsverenSGKTehvikleri({ brutAylikUcret, sektor }: { brutAy
   }
 }
 
+export function hesaplaGelirVergisi({ yillikGelir }: { yillikGelir: number }) {
+  let vergi = 0
+  let oncekiLimit = 0
+  const dilimler: { dilim: string; oran: string; vergi: number }[] = []
+
+  for (const dilim of C.GELIR_VERGISI_DILIMLERI) {
+    if (yillikGelir <= oncekiLimit) break
+    const dilimdeKalan = Math.min(yillikGelir, dilim.limit) - oncekiLimit
+    const dilimVergisi = dilimdeKalan * dilim.oran
+    vergi += dilimVergisi
+    dilimler.push({
+      dilim: dilim.limit === Infinity ? `${oncekiLimit.toLocaleString('tr-TR')} TL üzeri` : `${oncekiLimit.toLocaleString('tr-TR')} - ${dilim.limit.toLocaleString('tr-TR')} TL`,
+      oran: `%${(dilim.oran * 100).toFixed(0)}`,
+      vergi: Math.round(dilimVergisi * 100) / 100
+    })
+    oncekiLimit = dilim.limit
+    if (yillikGelir <= dilim.limit) break
+  }
+
+  const efektifOran = yillikGelir > 0 ? (vergi / yillikGelir) * 100 : 0
+  const netGelir = yillikGelir - vergi
+
+  return {
+    toplamVergi: Math.round(vergi * 100) / 100,
+    netGelir: Math.round(netGelir * 100) / 100,
+    efektifVergiOrani: Math.round(efektifOran * 100) / 100,
+    dilimler
+  }
+}
+
 export function hesaplaKumulatifVergiTakibi({ aylikBrutMaas, baslangicAyAdet }: { aylikBrutMaas: number; baslangicAyAdet: number }) {
   const sgk = aylikBrutMaas * (C.SGK_ISSCI_PAYI + C.SGK_ISSIZLIK_ISSCI)
   const aylikMatrah = aylikBrutMaas - sgk
