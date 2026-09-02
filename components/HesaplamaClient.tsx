@@ -17,6 +17,16 @@ const CategoryIconMap: Record<string, React.ReactNode> = {
   "📐": <Calculator size={36} className="text-indigo-500 drop-shadow-md" />
 };
 
+const RESULT_ICON_CONFIG: Record<string, { Icon: typeof Sparkles; badge: string; icon: string; glow: string }> = {
+  finans: { Icon: Coins, badge: "from-amber-400/25 to-amber-600/10 border-amber-500/30", icon: "text-amber-500", glow: "shadow-[0_0_18px_rgba(255,179,71,0.2)]" },
+  "is-hukuku": { Icon: Scale, badge: "from-blue-400/25 to-blue-600/10 border-blue-500/30", icon: "text-blue-500", glow: "shadow-[0_0_18px_rgba(77,139,255,0.2)]" },
+  egitim: { Icon: GraduationCap, badge: "from-emerald-400/25 to-emerald-600/10 border-emerald-500/30", icon: "text-emerald-500", glow: "shadow-[0_0_18px_rgba(0,232,135,0.2)]" },
+  saglik: { Icon: HeartPulse, badge: "from-rose-400/25 to-rose-600/10 border-rose-500/30", icon: "text-rose-500", glow: "shadow-[0_0_18px_rgba(255,77,109,0.2)]" },
+  faturalar: { Icon: Zap, badge: "from-yellow-400/25 to-yellow-600/10 border-yellow-500/30", icon: "text-yellow-500", glow: "shadow-[0_0_18px_rgba(251,191,36,0.2)]" },
+  "konut-insaat": { Icon: Home, badge: "from-teal-400/25 to-teal-600/10 border-teal-500/30", icon: "text-teal-500", glow: "shadow-[0_0_18px_rgba(45,212,191,0.2)]" },
+  matematik: { Icon: Calculator, badge: "from-indigo-400/25 to-indigo-600/10 border-indigo-500/30", icon: "text-indigo-500", glow: "shadow-[0_0_18px_rgba(167,139,250,0.2)]" },
+};
+
 export default function HesaplamaClient({ 
   data, 
   kategori, 
@@ -154,6 +164,8 @@ export default function HesaplamaClient({
 
   const categoryColor = Object.keys(CHART_COLORS).find(k => kategori.includes(k) || k.includes(kategori)) || 'finans';
   const colors = (CHART_COLORS as any)[categoryColor] || CHART_COLORS.finans;
+  const resultIcon = RESULT_ICON_CONFIG[kategori] || RESULT_ICON_CONFIG.finans;
+  const ResultIcon = resultIcon.Icon;
 
   return (
     <div className="max-w-6xl mx-auto py-6 sm:py-10 px-4 sm:px-6 overflow-hidden">
@@ -240,8 +252,8 @@ export default function HesaplamaClient({
               
               <div className="flex items-center justify-between gap-3 mb-6 border-b border-black/10 dark:border-white/10 pb-4 flex-wrap">
                 <h2 className="text-2xl font-black font-syne text-gray-900 dark:text-white drop-shadow-md flex items-center gap-3">
-                  <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400/25 to-amber-600/10 border border-amber-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,179,71,0.15)]">
-                    <Sparkles size={19} className="text-amber-500 drop-shadow-sm" />
+                  <span className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${resultIcon.badge} border flex items-center justify-center shrink-0 ${resultIcon.glow} ring-1 ring-white/10`}>
+                    <ResultIcon size={21} strokeWidth={2.2} className={`${resultIcon.icon} drop-shadow-sm`} />
                   </span>
                   Hesaplama Sonucu
                 </h2>
@@ -361,24 +373,9 @@ export default function HesaplamaClient({
         </div>
       )}
 
-      {/* FAQs Section */}
-      <div className="mt-16 max-w-4xl animate-slide-up" style={{ animationDelay: '0.4s' }}>
-        <h2 className="text-2xl sm:text-3xl font-black mb-8 font-syne text-gray-900 dark:text-white">Sıkça Sorulan Sorular</h2>
-        <div className="flex flex-col gap-4">
-          {faqs.map((faq, i) => (
-            <div key={i} className="glass-card border border-black/5 dark:border-white/5 rounded-2xl p-6 hover:border-black/10 dark:border-white/10 transition-colors">
-              <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-3 text-lg font-syne flex items-start gap-3">
-                <span className="text-amber-500 font-black">S.</span> {faq.q}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed font-mono pl-8">{faq.a}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Related Tools suggestions */}
       {relatedTools && relatedTools.length > 0 && (
-        <div className="mt-20 border-t border-black/10 dark:border-white/10 pt-12 animate-slide-up" style={{ animationDelay: '0.5s' }}>
+        <div className="mt-16 animate-slide-up" style={{ animationDelay: '0.4s' }}>
           <h2 className="text-xl sm:text-3xl font-black mb-6 sm:mb-8 font-syne text-gray-900 dark:text-white flex items-center gap-2 sm:gap-3">
             <span className="text-amber-500 inline-flex items-center"><Sparkles size={24} className="drop-shadow-md sm:w-7 sm:h-7" /></span> İlginizi Çekebilecek Diğer Hesaplamalar
           </h2>
@@ -396,6 +393,21 @@ export default function HesaplamaClient({
           </div>
         </div>
       )}
+
+      {/* FAQs Section */}
+      <div className="mt-20 max-w-4xl border-t border-black/10 dark:border-white/10 pt-12 animate-slide-up" style={{ animationDelay: '0.5s' }}>
+        <h2 className="text-2xl sm:text-3xl font-black mb-8 font-syne text-gray-900 dark:text-white">Sıkça Sorulan Sorular</h2>
+        <div className="flex flex-col gap-4">
+          {faqs.map((faq, i) => (
+            <div key={i} className="glass-card border border-black/5 dark:border-white/5 rounded-2xl p-6 hover:border-black/10 dark:border-white/10 transition-colors">
+              <h3 className="font-bold text-gray-800 dark:text-gray-200 mb-3 text-lg font-syne flex items-start gap-3">
+                <span className="text-amber-500 font-black">S.</span> {faq.q}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed font-mono pl-8">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

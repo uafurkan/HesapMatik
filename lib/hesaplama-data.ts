@@ -557,7 +557,12 @@ export const HESAPLAMA_DATA: Kategori[] = [
           { id:"fen_y", label:"Fen Bilimleri Yanlış", type:"number", min:0, max:20, defaultValue:0, required:true }
         ],
         grafik: "bar",
-        grafikElesmesi: "tyt" },
+        grafikElesmesi: "tyt",
+        kaynaklar: ["ÖSYM'nin resmi ham puan katsayıları (ortalama/standart sapma) her sınav döneminde değişir; buradaki taban puan yalnızca yaklaşık bir tahmindir"],
+        customFaqs: [
+          { q: "Tahmini taban puan neden ÖSYM'nin açıkladığı puanla birebir aynı değil?", a: "ÖSYM, TYT ham puanını her sınav döneminde o dönemki adayların ortalama ve standart sapmasına göre yeniden hesaplar. Bu istatistikler sınavdan sınava değiştiği için resmi kesin formül önceden bilinemez. Bu araçtaki puan, geçmiş dönemlerin ortalama katsayılarına dayanan yaklaşık bir tahmindir; kesin sonucunuz ÖSYM'nin resmi açıklamasıyla farklılık gösterebilir." },
+          { q: "TYT netleri nasıl hesaplanır?", a: "Her doğru cevap 1 puan, her 4 yanlış cevap 1 doğruyu götürür. Net = Doğru Sayısı - (Yanlış Sayısı / 4). Türkçe ve Sosyal Bilimler netleri ile Matematik ve Fen Bilimleri netleri birbirinden bağımsız hesaplanır ve toplanır." }
+        ] },
       { slug: "not-ortalamasi", title: "Not Ortalaması Hesaplama",
         description: "4'lük ve 100'lük sistemde ağırlıklı not ortalaması hesaplayın.",
         formulaKey: "hesaplaNotOrtalamasi",

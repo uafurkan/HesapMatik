@@ -854,9 +854,17 @@ export function hesaplaTYTNet({ turkce_d, turkce_y, mat_d, mat_y, sosyal_d, sosy
     net: Math.max(0, Math.round((s.d - s.y / 4) * 100) / 100)
   }))
   const toplamNet = tyt.reduce((sum, s) => sum + s.net, 0)
-  // TYT taban puanı 100 + (Her net için yaklaşık 1.3 - 3.3 puan arası katsayılar uygulanır)
+  // Her ders grubunun ÖSYM ham puana katkısı farklı ağırlıklıdır (yaklaşık, yıllık
+  // ortalama/standart sapmaya göre ÖSYM tarafından belirlenir ve her sınavda değişir).
+  // Türkçe ve Temel Matematik ~1.32, Sosyal ve Fen Bilimleri ~1.36 katsayısıyla hesaba katılır.
+  const agirlik: Record<string, number> = {
+    'Türkçe': 1.32,
+    'Matematik': 1.32,
+    'Sosyal Bilimler': 1.36,
+    'Fen Bilimleri': 1.36
+  }
   const taban = 100
-  const tahminiPuan = taban + (toplamNet * 3.1)
+  const tahminiPuan = taban + tyt.reduce((sum, s) => sum + s.net * (agirlik[s.ad] || 1.34), 0)
 
   return {
     tyt,
