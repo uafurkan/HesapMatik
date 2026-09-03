@@ -28,6 +28,24 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
   // Bu yüzden hem etiket hem öğe rengini temaya duyarlı sabit bir kontrast rengine zorluyoruz.
   const tooltipLabelStyle = { color: 'var(--tooltip-text)', fontWeight: 700, marginBottom: 4 };
   const tooltipItemStyle = { color: 'var(--tooltip-text-muted)' };
+  // Recharts Legend, her öğenin metnini de varsayılan olarak kendi seri/dilim rengiyle boyar
+  // (açık temada soluk sarı gibi renkler görünmez hale gelir) — formatter ile sabit renge zorluyoruz.
+  const legendFormatter = (value: string) => (
+    <span style={{ color: 'var(--tooltip-text)' }}>{value}</span>
+  );
+  // Pasta dilimi yüzde etiketleri de varsayılan olarak dilimin kendi rengiyle çizilir — aynı sorun.
+  const renderPieLabel = ({ cx, cy, midAngle, outerRadius, percent = 0 }: any) => {
+    if (percent <= 0.05) return null
+    const RADIAN = Math.PI / 180
+    const radius = outerRadius + 18
+    const x = cx + radius * Math.cos(-midAngle * RADIAN)
+    const y = cy + radius * Math.sin(-midAngle * RADIAN)
+    return (
+      <text x={x} y={y} fill="var(--tooltip-text)" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" fontFamily="var(--font-mono)" fontSize={13} fontWeight={700}>
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    )
+  };
 
   if (type === 'bar') {
     return (
@@ -36,7 +54,7 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
           <XAxis dataKey="name" stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickMargin={10} interval="preserveStartEnd" />
           <YAxis stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
           <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={{ ...tooltipItemStyle, fontWeight: 'bold' }} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
-          <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '10px' }} />
+          <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '10px' }} formatter={legendFormatter} />
           <Bar dataKey="value" name="Değer" fill={colors[0]} radius={[8, 8, 0, 0]}>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
@@ -51,11 +69,11 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
     return (
       <ResponsiveContainer width="100%" height={height}>
         <PieChart margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
-          <Pie 
-            data={data} cx="50%" cy="50%" 
-            labelLine={false} 
-            label={({ percent = 0 }) => percent > 0.05 ? `${(percent * 100).toFixed(0)}%` : ''} 
-            outerRadius={height / 2 - 40} 
+          <Pie
+            data={data} cx="50%" cy="50%"
+            labelLine={false}
+            label={renderPieLabel}
+            outerRadius={height / 2 - 40}
             innerRadius={height / 4}
             dataKey="value"
             stroke="rgba(0,0,0,0.2)"
@@ -66,7 +84,7 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
             ))}
           </Pie>
           <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={tooltipItemStyle} />
-          <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '20px' }} />
+          <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '20px' }} formatter={legendFormatter} />
         </PieChart>
       </ResponsiveContainer>
     );
@@ -79,7 +97,7 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
           <XAxis dataKey="name" stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickMargin={10} interval="preserveStartEnd" />
           <YAxis stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
           <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={tooltipItemStyle} />
-          <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '10px' }} />
+          <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '10px' }} formatter={legendFormatter} />
           {Object.keys(data[0]).filter(k => k !== 'name').map((key, i) => (
             <Line key={key} type="monotone" dataKey={key} stroke={colors[i % colors.length]} dot={{fill: '#030305', strokeWidth: 2, r: 4, stroke: colors[i % colors.length]}} activeDot={{r: 6}} strokeWidth={3} />
           ))}
