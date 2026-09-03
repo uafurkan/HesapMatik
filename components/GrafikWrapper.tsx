@@ -20,9 +20,14 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
     border: '1px solid var(--glass-border)',
     borderRadius: '12px',
     boxShadow: '0 10px 30px var(--glass-card-shadow)',
-    color: 'inherit',
+    color: 'var(--tooltip-text)',
     fontFamily: 'var(--font-mono)'
   };
+  // Recharts, öğe metnini varsayılan olarak kendi seri rengiyle çizer (ör. açık sarı KDV dilimi) —
+  // açık temada bu renk arka planla neredeyse aynı olup görünmez hale gelebiliyor.
+  // Bu yüzden hem etiket hem öğe rengini temaya duyarlı sabit bir kontrast rengine zorluyoruz.
+  const tooltipLabelStyle = { color: 'var(--tooltip-text)', fontWeight: 700, marginBottom: 4 };
+  const tooltipItemStyle = { color: 'var(--tooltip-text-muted)' };
 
   if (type === 'bar') {
     return (
@@ -30,7 +35,7 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
         <BarChart data={data} margin={{ top: 20, right: 10, left: -20, bottom: 5 }}>
           <XAxis dataKey="name" stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickMargin={10} interval="preserveStartEnd" />
           <YAxis stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
-          <Tooltip contentStyle={tooltipStyle} itemStyle={{ color: '#ffb347', fontWeight: 'bold' }} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
+          <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={{ ...tooltipItemStyle, fontWeight: 'bold' }} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
           <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '10px' }} />
           <Bar dataKey="value" name="Değer" fill={colors[0]} radius={[8, 8, 0, 0]}>
             {data.map((entry, index) => (
@@ -60,7 +65,7 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
               <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Pie>
-          <Tooltip contentStyle={tooltipStyle} />
+          <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={tooltipItemStyle} />
           <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '20px' }} />
         </PieChart>
       </ResponsiveContainer>
@@ -73,7 +78,7 @@ export default function GrafikWrapper({ type, data, colors, height = 320 }: { ty
         <LineChart data={data} margin={{ top: 20, right: 10, left: -20, bottom: 5 }}>
           <XAxis dataKey="name" stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickMargin={10} interval="preserveStartEnd" />
           <YAxis stroke="#6b6b8a" tick={{fontFamily: 'var(--font-mono)', fontSize: 10}} axisLine={false} tickLine={false} tickFormatter={(val) => val >= 1000 ? `${(val/1000).toFixed(0)}k` : val} />
-          <Tooltip contentStyle={tooltipStyle} />
+          <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={tooltipItemStyle} />
           <Legend wrapperStyle={{ fontFamily: 'var(--font-mono)', fontSize: 12, paddingTop: '10px' }} />
           {Object.keys(data[0]).filter(k => k !== 'name').map((key, i) => (
             <Line key={key} type="monotone" dataKey={key} stroke={colors[i % colors.length]} dot={{fill: '#030305', strokeWidth: 2, r: 4, stroke: colors[i % colors.length]}} activeDot={{r: 6}} strokeWidth={3} />

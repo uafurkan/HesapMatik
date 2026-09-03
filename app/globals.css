@@ -40,6 +40,8 @@
   --glass-card-grad1: rgba(255, 255, 255, 0.9);
   --glass-card-grad2: rgba(245, 245, 250, 0.5);
   --glass-card-shadow: rgba(0, 0, 0, 0.08);
+  --tooltip-text: #1a1a1f;
+  --tooltip-text-muted: #55555f;
 }
 
 .dark {
@@ -50,6 +52,8 @@
   --glass-card-grad1: rgba(20, 20, 30, 0.6);
   --glass-card-grad2: rgba(10, 10, 20, 0.3);
   --glass-card-shadow: rgba(0, 0, 0, 0.3);
+  --tooltip-text: #f0f0f5;
+  --tooltip-text-muted: #b5b5c5;
 }
 
 body {
