@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import Link from "next/link";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -11,6 +12,7 @@ const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap"
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hesapmatik.site'
+const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_ID
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -46,6 +48,38 @@ export default function RootLayout({
   return (
     <html lang="tr" suppressHydrationWarning>
       <body className={`${syne.variable} ${jetbrainsMono.variable} antialiased min-h-screen flex flex-col relative bg-[#FDFBF7] dark:bg-[#030305] text-gray-900 dark:text-[#f0f0f5] transition-colors duration-300`}>
+        {ADSENSE_ID && (
+          <>
+            {/* KVKK: reklam/analiz çerezlerine varsayılan olarak izin verilmiyor;
+                kullanıcı çerez bannerında "Kabul Et"e basınca AdsConsentManager bu izni günceller.
+                AdSense'in site doğrulaması için kod her sayfada koşulsuz mevcut olmalı. */}
+            <Script id="consent-default" strategy="beforeInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('consent', 'default', {
+                  ad_storage: 'denied',
+                  ad_user_data: 'denied',
+                  ad_personalization: 'denied',
+                  analytics_storage: 'denied'
+                });`}
+            </Script>
+            <Script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_ID}`}
+              crossOrigin="anonymous"
+              strategy="afterInteractive"
+              onLoad={() => {
+                ;(window as unknown as { adsbygoogle: Record<string, unknown>[] }).adsbygoogle =
+                  (window as unknown as { adsbygoogle: Record<string, unknown>[] }).adsbygoogle || []
+                ;(window as unknown as { adsbygoogle: Record<string, unknown>[] }).adsbygoogle.push({
+                  google_ad_client: ADSENSE_ID,
+                  enable_page_level_ads: true,
+                })
+              }}
+            />
+          </>
+        )}
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           {/* Ambient Glowing Orbs */}
           <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none z-[-1] animate-pulse-slow"></div>
@@ -76,7 +110,7 @@ export default function RootLayout({
             <p>© {new Date().getFullYear()} HesapMatik. Tüm hakları saklıdır. Hesaplama sonuçları bilgi amaçlıdır, kesin bir yasal dayanak oluşturmaz.</p>
           </div>
         </footer>
-        <AdsConsentManager adsenseId={process.env.NEXT_PUBLIC_ADSENSE_ID || 'ca-pub-XXXXXXXXXX'} />
+        <AdsConsentManager />
         <Analytics />
         </ThemeProvider>
       </body>
