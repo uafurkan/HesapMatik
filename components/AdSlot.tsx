@@ -27,7 +27,7 @@ export default function AdSlot({ slot, format = 'auto', className = '' }: { slot
         style={{ display: "block", textAlign: "center" }}
         data-ad-layout={format === 'in-article' ? 'in-article' : undefined}
         data-ad-format={format === 'in-article' ? 'fluid' : format}
-        data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_ID}
+        data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_ID || 'ca-pub-2501861627867479'}
         data-ad-slot={slot}
         data-full-width-responsive="true"
       />
