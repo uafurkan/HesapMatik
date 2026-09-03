@@ -4,12 +4,12 @@ import type { NextConfig } from "next";
 // script/frame kaynaklarını bilinen alan adlarıyla sınırlayan bir CSP.
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagservices.com https://tpc.googlesyndication.com https://va.vercel-scripts.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagservices.com https://tpc.googlesyndication.com https://www.google.com https://googleads.g.doubleclick.net https://va.vercel-scripts.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: https: blob:",
-  "connect-src 'self' https://api.groq.com https://www.tcmb.gov.tr https://pagead2.googlesyndication.com https://vitals.vercel-insights.com",
-  "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com",
+  "connect-src 'self' https://api.groq.com https://www.tcmb.gov.tr https://pagead2.googlesyndication.com https://*.adtrafficquality.google https://vitals.vercel-insights.com",
+  "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com https://*.adtrafficquality.google",
   "object-src 'none'",
   "base-uri 'self'",
   "frame-ancestors 'self'",
