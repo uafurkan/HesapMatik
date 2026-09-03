@@ -298,28 +298,26 @@ export default function HesaplamaClient({
                   const isNumber = typeof value === 'number';
                   const valueStr = isNumber ? value.toLocaleString('tr-TR') : (value as string);
                   const isLongText = !isNumber && valueStr.length > 25;
-                  
-                  // Dynamic font size depending on character length
-                  let fontSizeClass = "text-xl sm:text-2xl md:text-3xl";
-                  if (valueStr.length > 25) {
-                    fontSizeClass = "text-xs sm:text-sm md:text-base";
-                  } else if (valueStr.length > 18) {
-                    fontSizeClass = "text-sm sm:text-base md:text-lg";
-                  } else if (valueStr.length > 12) {
-                    fontSizeClass = "text-base sm:text-lg md:text-xl";
-                  } else if (valueStr.length > 8) {
-                    fontSizeClass = "text-lg sm:text-xl md:text-2xl";
-                  }
+
+                  // Sürekli (clamp tabanlı) yazı boyutu: kutu her zaman değeri kırpmadan gösterir,
+                  // uzunluk arttıkça yazı otomatik küçülür (sabit Tailwind kademeleri yerine).
+                  const len = valueStr.length || 1;
+                  const remSize = Math.max(0.9, Math.min(1.875, 12 / len));
+                  const fontSizeStyle = { fontSize: `${remSize}rem` };
 
                   return (
-                    <div 
-                      key={key} 
+                    <div
+                      key={key}
+                      title={valueStr}
                       className={`bg-white/40 dark:bg-black/40 p-4 sm:p-5 rounded-2xl border border-black/5 dark:border-white/5 shadow-inner hover:border-amber-500/30 transition-colors group ${isLongText ? 'sm:col-span-2' : ''}`}
                     >
                       <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest mb-1.5 sm:mb-2 font-mono group-hover:text-gray-600 dark:text-gray-400 transition-colors">
                         {key.replace(/([A-Z])/g, ' $1').trim()}
                       </div>
-                      <div className={`font-black text-gray-900 dark:text-white font-syne drop-shadow-sm group-hover:text-amber-400 transition-colors ${fontSizeClass} ${isNumber ? 'whitespace-nowrap overflow-x-auto scrollbar-none' : 'break-words'}`}>
+                      <div
+                        style={fontSizeStyle}
+                        className={`font-black text-gray-900 dark:text-white font-syne drop-shadow-sm group-hover:text-amber-400 transition-colors leading-tight ${isNumber ? 'whitespace-nowrap' : 'break-words'}`}
+                      >
                         {valueStr}
                       </div>
                     </div>
