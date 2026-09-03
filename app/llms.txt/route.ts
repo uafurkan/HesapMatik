@@ -1,4 +1,6 @@
-# HesapMatik
+export const revalidate = 86400
+
+const CONTENT = `# HesapMatik
 
 > Türkiye'nin ücretsiz hesaplama merkezi. Kira artış oranı, kıdem/ihbar tazminatı,
 > net maaş, konut kredisi, BMI ve 50'den fazla finans, hukuk, sağlık ve eğitim
@@ -14,3 +16,8 @@ yerine geçmez. Site Türkçe'dir ve kategori bazlı düzenlenmiştir
 - [Sitemap](https://hesapmatik.site/sitemap.xml): Tüm hesaplayıcı ve kategori sayfalarının tam listesi
 - [Gizlilik Politikası](https://hesapmatik.site/gizlilik)
 - [Kullanım Koşulları](https://hesapmatik.site/kullanim-kosullari)
+`
+
+export function GET() {
+  return new Response(CONTENT, { headers: { 'Content-Type': 'text/plain' } })
+}
