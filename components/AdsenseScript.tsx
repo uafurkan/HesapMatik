@@ -23,7 +23,7 @@ export default function AdsenseScript({ adsenseId }: { adsenseId: string }) {
         async
         src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
         crossOrigin="anonymous"
-        strategy="afterInteractive"
+        strategy="beforeInteractive"
         onLoad={() => {
           const w = window as unknown as { adsbygoogle: Record<string, unknown>[] }
           w.adsbygoogle = w.adsbygoogle || []

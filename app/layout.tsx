@@ -12,7 +12,10 @@ const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap"
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hesapmatik.site'
-const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_ID
+// AdSense yayıncı ID'si gizli bir bilgi değildir — zaten her sayfanın kaynağında
+// görünmesi gerekir, bu yüzden Vercel'de env değişkeni gerektirmeden doğrudan koda
+// gömülüyor (env değişkeni varsa onu geçersiz kılabilirsiniz).
+const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_ID || 'ca-pub-2501861627867479'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
